@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<body>
+  <div class = "login-page-body">
+    <div class = "container">
+      <div class="row login-page-section">
+        <div class="col-md-7">
+          <div class = "login-image w-100" style="background-image: url({% static 'images/loginimg1.jpg' %})">
+        </div>
+      </div>
+        <div class="col-md-5 login-form-section">
+          <!-- <div class="hero"> -->
+          <div class="login-form-details">
+            <form method="POST" id="contactform" class="contact-form">
+              {% csrf_token%}
+              <div class="register">
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"
+                    >Email address</label
+                  >
+                  <input
+                    type="email"
+                    name="Email_Address"
+                    placeholder="Enter your Email..."
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    name="Password"
+                    placeholder="Enter your Password..."
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    required
+                  />
+                </div>
+                <br />
+                <div>
+                  <button type="submit" class="btn btn-primary" id="button1">
+                    Login
+                  </button>
+                  {% if messages %} {% for result in messages %}
+                  <b style="color: green">{{result}}</b>
+                  {% endfor %} {% endif %}
+                </div>
+                <br />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<style>
+  #button1 {
+    width: 40%;
+		background-color: #299479 !important;
+		border: none !important;
+		height: 40px;
+    color: white;
+  }
+  .login-page-body{
+    margin-top: 150px;
+    margin-bottom: 50px;
+  }
+  .login-image{
+    height: 550px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .login-page-section {
+    --bs-gutter-x: 0px;
+  
+  }
+
+  .login-form-section {
+    position: relative;
+    border: 1px solid black;
+  }
+
+  .login-form-details {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+</style>
+{% endblock content %}

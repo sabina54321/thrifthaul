@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+    <section class = "container dproduct my-5 pt-5">
+        <div class = "row mt-5">
+            <div class = "col-lg-5 col-md-12 col-12">
+                <img class = "img-fluid w-100" src="{% static 'images/container.jpg' %}">
+
+                <div class = "small-img-group">
+                    <div class = "small-img-col">
+                        <img src="{% static 'images/container.jpg' %}" width="100%" class = "small-img">
+                    </div>
+                    <div class = "small-img-col">
+                        <img src="{% static 'images/container1.jpg' %}" width="100%" class = "small-img">
+                    </div>
+                    <div class = "small-img-col">
+                        <img src="{% static 'images/container.jpg' %}" width="100%" class = "small-img">
+                    </div>
+                </div>
+            </div>
+            <div class = "col-lg-6 col-md-12 col-12">
+                <h3><b>Seller Details</b><br><br>
+                Sold by: <br>
+                Phone Number: <br>
+                Location:<br>
+            </h3><br><br><br>
+            <h3><b>Pricing Details</b><br><br>
+                Price: <br>
+                Pricing Negotiable: <br>
+            </h3><br><br><br>
+            <h3><b>Product Details</b><br><br>
+                Condition: <br>
+                Rating: <br>
+            </h3>
+            </div>
+        </div>
+    </section>
+</body>
+<footer>
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content row">
+                <div class="col-md-4">
+                    <div class="footer-section about">
+                        <h2><b>Contact</b><br></h2>
+                        <div>
+                            <span class="mail"><b>Thrifthaul@gmail.com</b></span>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-section link">
+                        <h2 class="navigation"><b>About Website</b></h2>
+                        <span class="nav-down">
+              <ul style="padding: 0">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="SellonThrift.html">SellonThrift</a></li>
+                <li><a href="FAQ.html">FAQs</a></li>
+              </ul>
+            </span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-section">
+                        <h2><b>Stay Connected</b></h2>
+                        <a href="https://www.facebook.com" class="social-links" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com" class="social-links" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.twitter.com" class="social-links" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                    <div class="bottom">
+                      <p class="copyright">Copyright@2021.Thrifthaul</p>
+                </div>
+              </div>
+        </div>
+      </div>
+  </footer>
+  <style>
+    .small-img-group{
+        display: flex;
+        justify-content: space-between;
+    }
+    .small-img-col{
+        flex-basis: 25%;
+        cursor: pointer;
+    }
+</style>
+{% endblock content %}
