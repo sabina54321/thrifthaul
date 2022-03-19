@@ -80,46 +80,20 @@
   <div class="container">
     <h3 class="mt-4"><b>Explore The Collection </b></h3>
     <div class="row mt-4">
+      {% for product in items %}
       <div class="col-md-4 mb-4">
         <div class="card shadow">
-          {% for x in items %}
-          <img src="{x.product_image.url}" class="card-img-top" alt="" />
-          <p class="lead">{{x.title}}</p><hr>
-          <button class="btn btn-primary item-name" onclick="location.href = '/productdetail'">
-            View Details
-          </button> 
-          {% endfor %}
-          <!-- <div class="card-body">
-            <h5 class="card-title">Bag</h5>
-            <p class="card-text">Rs 1500</p>
-          
-          </div> -->
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow">
-          <img src="{% static 'images/container1.jpg' %}" class="card-img-top" alt="Jeans" />
+          <img src="{{ product.product_image.url }}" class="card-img-top" alt="Sweartshirt" style="height: 350px;" />
           <div class="card-body">
-            <h5 class="card-title">Jeans</h5>
-            <p class="card-text">Rs 1500</p>
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">Rs {{ product.item_price }}</p>
             <button class="btn btn-primary item-name" onclick="location.href = '/productdetail'">
               View Details
             </button>
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow">
-          <img src="{% static 'images/container2.jpg' %}" class="card-img-top" alt="Sweartshirt" />
-          <div class="card-body">
-            <h5 class="card-title">Sweartshirt</h5>
-            <p class="card-text">Rs 1500</p>
-            <button class="btn btn-primary item-name" onclick="location.href = '/productdetail'">
-              View Details
-            </button>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
   <br />
@@ -127,42 +101,20 @@
   <div class="container">
     <h3 class="mt-4"><b>Just For You</b></h3>
     <div class="row mt-4">
+      {% for product in image %}
       <div class="col-md-4 mb-4">
         <div class="card shadow">
-          <img src="{% static 'images/container3.jpg' %}" class="card-img-top" alt="Sweater" />
+          <img src="{{ product.product_image.url }}" class="card-img-top" alt="Sweartshirt" style="height: 350px;" />
           <div class="card-body">
-            <h5 class="card-title">Sweater</h5>
-            <p class="card-text">Rs 1500</p>
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">Rs {{ product.item_price }}</p>
             <button class="btn btn-primary item-name" onclick="location.href = '/productdetail'">
               View Details
             </button>
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow">
-          <img src="{% static 'images/container4.jpg' %}" class="card-img-top" alt="Jacket" />
-          <div class="card-body">
-            <h5 class="card-title">Jacket</h5>
-            <p class="card-text">Rs 1500</p>
-            <button class="btn btn-primary item-name" onclick="location.href = '/productdetail'">
-              View Details
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow">
-          <img src="{% static 'images/container5.jpg' %}" class="card-img-top" alt="Sweater" />
-          <div class="card-body">
-            <h5 class="card-title">Sweater</h5>
-            <p class="card-text">Rs 1500</p>
-            <button class="btn btn-primary item-name" onclick="location.href = '/productdetail'">
-              View Details
-            </button>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
   <!-- container section for desired destination ends -->

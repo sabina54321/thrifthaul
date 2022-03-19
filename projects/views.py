@@ -43,16 +43,20 @@ def loginUser(request):
     return render(request, 'login.html')
 
 def logoutUser(request):
-    logout(request)
-    return redirect('login')
+    try:
+        del request.session['Email_Address']
+    except:
+        return render(request,'index.html')
+    return render(request,'index.html')
 
 
 def home(request):
-     items = product.objects.all()
-     context = {'items':items}  
+     items = product.objects.all()[0:3]
+     image = product.objects.all()[3:]
+     context = {'items':items, 'image': image}  
      return render(request, 'index.html', context)
 
-# @login_required(login_url='login')
+# @login_required
 def Sell(request):
         if request.method == "POST":
             prod = product()
@@ -76,6 +80,9 @@ def Sell(request):
 
 def productdetail(request):
     return render(request, 'productdetail.html') 
+
+def products(request):
+    return render(request, 'products.html') 
 
 
 
