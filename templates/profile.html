@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<body>
+    <div class="container profile-section">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="profile-image mt-5 mb-4" style=" background-image: url('{% static 'images/slider.jpg' %}'); "></div>
+                    <div class="card-body">
+                        <button class="btn btn-primary item-name mb-4">
+                            Upload Picture
+                          </button>
+                        <h5 class="card-title profile-username">{{ user.username }}</h5>
+                        <h5 class="card-title profile-email">{{ user.email }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+            <div class="row">
+                {% for product in productdetail %}
+                <div class="col-md-6 mb-4">
+                  <div class="card shadow">
+                    <div class="card-img-top" style="background-image: url({{product.product_image.url}});">
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{ product.title }}</h5>
+                      <p class="card-text">Rs {{ product.item_price }}</p>
+                      <div class = "d-flex justify-content-between gap-3">
+                          <div class="w-100">
+                      <button class="btn btn-primary item-name ">
+                        Edit
+                      </button>
+                    </div>
+                    <div class="w-100">
+                      <form action="/productdelete/{{product.id}}" method="POST">
+                          {% csrf_token %}
+                      <button class="btn btn-primary item-name">
+                        Delete
+                      </button>
+                    </form>
+                </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+        </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+<style>
+    .profile-section {
+        margin-top: 200px;
+        margin-bottom: 200px;
+    }
+
+    .profile-image {
+        height: 150px;
+        width: 150px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        border-radius: 100px;
+        display: flex;
+        align-self: center;
+
+    }
+
+    .profile-username {
+        text-align: center;
+    }
+
+    .profile-email {
+        text-align: center;
+    }
+</style>
+
+{% endblock content %}

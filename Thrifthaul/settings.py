@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = "/login/"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authentication',
     'projects',
 ]
 
@@ -52,6 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Thrifthaul.urls'
+AUTH_USER_MODEL = 'authentication.User'
 
 TEMPLATES = [
     {
@@ -122,6 +126,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+# EMAIL CONFIG
+
+EMAIL_FORM_USER = ''
+EMAIL_FROM_USER = os.environ.get('EMAIL_FROM_USER')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'thrifthaulHCK@gmail.com'
+EMAIL_HOST_PASSWORD = 'Hellothrift527'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -138,3 +151,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

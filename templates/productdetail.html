@@ -1,91 +1,78 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <body>
     <section class = "container dproduct my-5 pt-5">
         <div class = "row mt-5">
             <div class = "col-lg-5 col-md-12 col-12">
-                <img class = "img-fluid w-100" src="{% static 'images/container.jpg' %}">
-
-                <div class = "small-img-group">
+              <div class="card-img-details" id="productImg" style="background-image: url({{productDetails.product_image.url}});">
+              </div>
+                <div class = "small-img-group d-flex justify-content-start">
+                  {% for pi in productDetails.productimage_set.all %}
                     <div class = "small-img-col">
-                        <img src="{% static 'images/container.jpg' %}" width="100%" class = "small-img">
-                    </div>
-                    <div class = "small-img-col">
-                        <img src="{% static 'images/container1.jpg' %}" width="100%" class = "small-img">
-                    </div>
-                    <div class = "small-img-col">
-                        <img src="{% static 'images/container.jpg' %}" width="100%" class = "small-img">
-                    </div>
+                      <div class="card-img-details-small" style="background-image: url({{pi.image.url}});">
+                      </div>  
+                      </div>
+                      {% endfor %}
                 </div>
             </div>
-            <div class = "col-lg-6 col-md-12 col-12">
+            <div class = "col-lg-6 col-md-12 col-12 seller-form-section">
+                <div class="seller-details">
                 <h3><b>Seller Details</b><br><br>
-                Sold by: <br>
-                Phone Number: <br>
-                Location:<br>
-            </h3><br><br><br>
+                Sold by: {{productDetails.seller}}<br>
+                Phone Number:{{productDetails.phone_number}} <br>
+                Location:{{productDetails.address}}<br>
+                EmailAddress:{{productDetails.email_address}}<br>
+            </h3>
+        </div><br>
+        <div class="row mt-5">
+          <div class="col-md-6 negotiable">
             <h3><b>Pricing Details</b><br><br>
-                Price: <br>
-                Pricing Negotiable: <br>
-            </h3><br><br><br>
+                Price:{{productDetails.item_price}} <br>
+                Pricing Negotiable:{{productDetails.price_negotiable}} <br>
+            </h3>
+        </div>
+        <div class="col-md-6 product-detail">
             <h3><b>Product Details</b><br><br>
-                Condition: <br>
+                Condition:{{productDetails.condition}} <br>
                 Rating: <br>
             </h3>
+        </div>
+        </div>
             </div>
         </div>
     </section>
 </body>
-<footer>
-    <div class="footer">
-        <div class="container">
-            <div class="footer-content row">
-                <div class="col-md-4">
-                    <div class="footer-section about">
-                        <h2><b>Contact</b><br></h2>
-                        <div>
-                            <span class="mail"><b>Thrifthaul@gmail.com</b></span>
-                        </div>
-                        <br />
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="footer-section link">
-                        <h2 class="navigation"><b>About Website</b></h2>
-                        <span class="nav-down">
-              <ul style="padding: 0">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="SellonThrift.html">SellonThrift</a></li>
-                <li><a href="FAQ.html">FAQs</a></li>
-              </ul>
-            </span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="footer-section">
-                        <h2><b>Stay Connected</b></h2>
-                        <a href="https://www.facebook.com" class="social-links" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com" class="social-links" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.twitter.com" class="social-links" target="_blank"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                    <div class="bottom">
-                      <p class="copyright">Copyright@2021.Thrifthaul</p>
-                </div>
-              </div>
-        </div>
-      </div>
-  </footer>
+  <script>
+      var productImg = document.getElementById("productImg");
+      var smallimg = document.getElementsByClassName("card-img-details-small");
+
+        smallimg[0].onclick = function(){
+          console.log(smallimg[0].style.backgroundImage)
+          productImg.style.backgroundImage =  smallimg[0].style.backgroundImage;
+      }
+        smallimg[1].onclick = function(){
+          productImg.style.backgroundImage = smallimg[1].style.backgroundImage;
+    }
+        smallimg[2].onclick = function(){
+          productImg.style.backgroundImage = smallimg[2].style.backgroundImage;
+  }
+  </script>
   <style>
-    .small-img-group{
-        display: flex;
-        justify-content: space-between;
+    .negotiable{
+        float: right;
+      }
+    .product-detail{
+        float: left;
     }
     .small-img-col{
         flex-basis: 25%;
         cursor: pointer;
+        width: 50px;
+        overflow: hidden;
+    }
+    .small-img-col:hover{
+        transform: scale(1.2);
     }
 </style>
 {% endblock content %}

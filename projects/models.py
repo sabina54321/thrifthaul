@@ -1,22 +1,16 @@
 from datetime import datetime
-import email
+from pyexpat import model
+from tkinter import CASCADE
 from django.db import models
-from django.forms import PasswordInput
+from django.contrib.auth.models import User
 import os
+from authentication.models import User
 
 def filepath(request, filename):
     old_filename = filename
     timeNow = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     filename = "%s%s", (timeNow,old_filename)
     return os.path.join('upload/', filename)
-
-class users(models.Model):
-    Name=models.CharField(max_length=100)
-    Email_Address=models.CharField(max_length=100)
-    Password=models.CharField(max_length=100)
-    Confirm_Password=models.CharField(max_length=100)
-    class Meta:
-        db_table="users"
 
 CATEGORY_CHOICES = (
 
@@ -35,21 +29,48 @@ CONDITION_CHOICES = (
     ('N', 'New'),
 )
 
+SIZE_CHOICES = (
+    ('S', 'Small'),
+    ('M', 'Medium'),
+    ('L', 'Large'),
+)
+
 NEGOTIABLE_CHOICES = (
     ('Y', 'Yes'),
     ('N', 'No'),
 )
 class product(models.Model):
-    seller = models.CharField(max_length=100, null=True, blank=True)
+    seller_name = models.CharField(max_length=100, null=True, blank=True)
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=100, null=True, blank=True)
     title = models.CharField(max_length=100, null=True, blank=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=20, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
+    email_address = models.CharField(max_length=100, null=True, blank=True)
+    used_for = models.CharField(max_length=100, null=True, blank=True)
+    size = models.CharField(choices=SIZE_CHOICES, max_length=100, null=True, blank=True)
     item_price = models.FloatField()
     condition = models.CharField(choices=CONDITION_CHOICES, max_length=10, null=True, blank=True)
     price_negotiable = models.CharField(choices=NEGOTIABLE_CHOICES, max_length=5, null=True, blank=True)
-    # product_image = models.ImageField(upload_to=filepath, null=True, blank=True)
-    product_image = models.ImageField(upload_to="productimg")
+    colour = models.CharField(max_length=50, null=True, blank=True)
+    material = models.CharField(max_length=50, null=True, blank=True)
+    product_image = models.ImageField(upload_to="productimg", null=True, blank=True)
     description = models.TextField()
+    stock = models.IntegerField(default=0)
     def __str__(self):
-        return str(self.title)
+        return str(self.title) 
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to = "productimg")
+
+    def __str__(self):
+        return self.product.title 
+
+
+
+
+
+
+        
 

@@ -11,6 +11,10 @@
       href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
       rel="stylesheet"
     />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+    rel="stylesheet"
+  />
     <title>Thrift Haul</title>
     <header class="page-header"> 
         <!--Navigation-->
@@ -23,8 +27,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <form class="d-flex">
-                    <input class="form-control search-form" type="search" placeholder="Search Here" aria-label="Search" style="width: 500px";>
+                  <form method = "GET" action = "/search" class="d-flex">
+                    <input name = "query" class="form-control search-form" type="search" placeholder="Search Here" aria-label="Search" style="width: 500px";>
                     <button class="btn btn-outline-success" id = "search-icon-btn" type="submit"><i class = "fa fa-search"></i></button>
                   </form>
                 </li>
@@ -34,15 +38,19 @@
                 <li class="nav-item">
                   <a class = "nav-link active" href="{% url 'Sell' %} ">SellOnThrift</a>
                 </li>
-                {% if request.session.Email_Address %}
+               
+                {% if user.is_authenticated %}
+                <li>
+                  <a class = "nav-link active" href="{% url 'profile' %}">Profile</a>
+                  </li>
                 <li class="nav-item">
-                  <form method="POST">
+                  <form method="POST" action="/logoutuser">
                     {%csrf_token%}
-                  <a class = "nav-link active" href="{% url 'logout' %}">Logout</a> 
+                  <a class = "nav-link active" href="{% url 'logout' %}">Logout</a>  
                   </form>
                   {% else %}
                   <li class="nav-item">
-                    <a class = "nav-link active" href="{% url 'Register' %} ">Register</a>
+                    <a class = "nav-link active" href="{% url 'register' %} ">Register</a>
                   </li>
                   <li class="nav-item">
                     <a class = "nav-link active" href="{% url 'login' %}">Login</a>

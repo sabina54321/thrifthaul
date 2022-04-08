@@ -1,0 +1,102 @@
+<h3>Register</h3>
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+	<div class = "Register-page-body">
+		<div class = "container">
+	<div class="row register-page-section">
+		<div class="col-md-7">
+			<div class = "register-image w-100" style="background-image : url({% static 'images/loginimg1.jpg' %})">
+			</div>
+		</div>
+		<div class="col-md-5 register-form-section">
+      	 	<div id="error"></div>
+			   <div class="register-form-details">
+			   <form action="/register/" method = 'POST' id="contactform" class="contact-form">
+				{% csrf_token%}
+				<div class="register">
+					<div class="mb-3">
+						<label for="firstName" class="form-label">First Name</label>
+						<input type="text" name= 'first_name' placeholder="Enter your First Name..." class="form-control" id="firstName" aria-describedby="emailHelp" required>
+					</div>
+					<div class="mb-3">
+						<label for="lastName" class="form-label">Last Name</label>
+						<input type="text" name= 'last_name' placeholder="Enter your Last Name..." class="form-control" id="lastName" aria-describedby="emailHelp" required>
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">E-mail Address</label>
+						<input type="email" name= 'email' placeholder="Enter your Email..." class="form-control" id="email" aria-describedby="emailHelp" required>
+					  </div>
+					  <div class="mb-3">
+						<label for="username" class="form-label">Uername</label>
+						<input type="text" name= 'username' placeholder="Enter your Username..." class="form-control" id="username" aria-describedby="emailHelp" required>
+					  </div>
+					<div class="mb-3">
+						<label for="password1" class="form-label">Password</label>
+						<input type="password" name= 'password1' placeholder="Enter your Password..." class="form-control" id="password1" required 
+					{% comment%}	onchange="form.Confirm_Password.pattern=this.value"{%endcomment%}
+						>
+					  </div>
+					<div class="mb-3">
+						<label for="password2" class="form-label">Confirm Password</label>
+						<input type="password" name= 'password2' placeholder="Re-Enter your Password..." class="form-control" id="password2" required>
+					  </div><br>
+					<div>
+						<button type="submit" class="btn btn-primary" id="button1">Register</button>
+					</div>
+					<div>
+						{% if messages %}
+						{% for result in messages %}
+						<b style="color: green;">{{result}}</b>
+						{% endfor %}
+						{% endif%}
+					</div>
+				 </div>
+				</form>
+			</div>
+    </div> 
+	</div>        
+</div>
+</div>
+ </body>
+ <style>
+	#button1 {
+		width: 40%;
+		background-color: #299479 !important;
+		border: none !important;
+		height: 40px;
+		color: white;
+	  }
+	  .register-page-body{
+		margin-top: 65px;
+		margin-bottom: 50px;
+	  }
+	  .register-image{
+		height: 660px;
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+	  }
+	
+	  .register-page-section {
+		--bs-gutter-x: 0px;
+	  
+	  }
+	
+	  .register-form-section {
+		position: relative;
+		border: 1px solid black;
+	  }
+	
+	  .register-form-details {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	  }
+ </style>
+{% endblock content %} 
+ 

@@ -1,240 +1,214 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <body>
-  <div class="bg-image img1 container">
+  <!-- <div class="bg-image img1 container"> -->
+  <div class="container">
     <div class="sell-form-section">
-      <form method="POST" enctype="multipart/form-data" id="sellform" class="sell-form">
+      <form
+        method="POST"
+        enctype="multipart/form-data"
+        id="sellform"
+        class="sell-form"
+      >
         {% csrf_token %}
         <h2>Sell your Item</h2>
-        <div class="Sell">
-          <div class="mb-3">
-            <label><b>Seller Name</b></label><br>
-            <input type="text" name='Name' class="box form-control" placeholder="Enter your name" required>
-          </div>
-          <div class="mb-3">
-            <label><b>Title</b></label><br>
-            <input type="text" name='Title' class="box form-control" placeholder="Enter the Ad Title" required>
-          </div>
-          <div class="dropdown mb-3">
-            <label for=list of product><b>Category</b></label><br>
-            <select class="Category" name='Category'>
-              <option value="womens wear">Womens Wear</option>
-              <option value="mens wear">Mens Wear</option>
-              <option value="kids wear">Kids Wear</option>
-              <option value="party bag">Party Bag</option>
-              <option value="hand bag">Hand Bag</option>
-              <option value="side bag">Side Bag </option>
-            </select><br>
-          </div>
-          <div class="mb-3">
-            <label><b>Address</b></label><br>
-            <input type="text" name='Address' class="box form-control" placeholder="Enter your Address" required>
-          </div>
-          <div class="mb-3">
-            <label><b>Item Price</b></label><br>
-            <input type="text" name='Price' class="box form-control" placeholder="Enter the Price of the Item" required>
-          </div>
-          <div class="mb-3">
-            <label for="condition"><b>Condition of an item</b></label><br>
-            <select class="condition" name='Condition'>
-              <option value="good">Good</option>
-              <option value="old">Old</option>
-              <option value="new">New</option>
-            </select><br>
-          </div>
-          <div class="mb-3">
-            <label for="Negotiable"><b>Price Negotiable</b></label><br>
-            <select class="condition" name='Negotiable'>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select><br>
-          </div>
-          <div class="mb-3">
-            <label for="image"><b>Upload the product image</b></label>
-            <input type="file" name="image" required>
-          </div>
-          <div class="mb-3">
-            <label><b>Description</b></label><br>
-            <textarea name="Description" class="box form-control" placeholder="Enter the Description of the Item" required></textarea>
-          </div>
-          <div>
-            <div class="send">
-              <button type="submit" class="btn btn-primary" id="button1">Save</button><br>
+        <div class="Sell row">
+          <div class="col-md-5">
+            <div class="mb-3">
+              <label><b>Seller Name </b><strong style="color: red;">*</strong></label
+              ><br />
+              <input
+                type="text"
+                value="{{user.first_name}}"
+                name="Name"
+                class="box form-control"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label><b>Phone Number </b><strong style="color: red;">*</strong></label
+              ><br />
+              <input
+                type="number"
+                name="Number"
+                class="box form-control"
+                placeholder="Enter your Phone number"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label><b>Title </b><strong style="color: red;">*</strong></label
+              ><br />
+              <input
+                type="text"
+                name="Title"
+                class="box form-control"
+                placeholder="Enter the Ad Title"
+                required
+              />
+            </div>
+            <div class="dropdown mb-3">
+              <label for="list" of product><b>Category</b></label
+              ><br />
+              <select class="Category" name="Category">
+                <option value="womens wear">Womens Wear</option>
+                <option value="mens wear">Mens Wear</option>
+                <option value="kids wear">Kids Wear</option>
+                <option value="party bag">Party Bag</option>
+                <option value="hand bag">Hand Bag</option>
+                <option value="side bag">Side Bag</option></select
+              ><br />
+            </div>
+            <div class="mb-3">
+              <label><b>Address </b><strong style="color: red;">*</strong></label
+              ><br />
+              <input
+                type="text"
+                name="Address"
+                class="box form-control"
+                placeholder="Enter your Address"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label><b>Email Address</b></label
+              ><br />
+              <input
+                type="text"
+                name="Email"
+                value="{{user.email}}"
+                class="box form-control"
+                placeholder="Enter you email address"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label><b>Used for </b><strong style="color: red;">*</strong></label
+              ><br />
+              <input
+                type="text"
+                name="Usedfor"
+                class="box form-control"
+                placeholder="Enter the product used for"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label><b>Size</b></label
+              ><br />
+              <select class="condition" name="Size">
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+              </select>
             </div>
           </div>
+          <div class="col-md-5">
+            <div class="mb-3">
+              <label for="condition"><b>Condition of an item </b><strong style="color: red;">*</strong></label
+              ><br />
+              <select class="condition" name="Condition">
+                <option value="good">Good</option>
+                <option value="old">Old</option>
+                <option value="new">New</option></select
+              ><br />
+            </div>
+            <div class="mb-3">
+              <label><b>Item Price </b><strong style="color: red;">*</strong></label
+              ><br />
+              <input
+                type="text"
+                name="Price"
+                class="box form-control"
+                placeholder="Enter the Price of the Item"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label><b>Number of Item in Stock</b></label
+              ><br />
+              <input
+                type="number"
+                name="Stock"
+                class="box form-control"
+                placeholder="Enter the Price of the Item"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="Negotiable"><b>Price Negotiable</b></label
+              ><br />
+              <select class="condition" name="Negotiable">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option></select
+              ><br />
+            </div>
+            <div class="mb-3">
+              <label><b>Colour </b></label
+              ><br />
+              <input
+                type="text"
+                name="Colour"
+                class="box form-control"
+                placeholder="Enter the colour of the product"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label><b>Material </b><strong style="color: red;">*</strong></label
+              ><br />
+              <input
+                type="text"
+                name="Material"
+                class="box form-control"
+                placeholder="Enter the Material of the product"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="image"><b>Upload the product image </b><strong style="color: red;">*</strong></label>
+              <input type="file" name="image" required />
+            </div>
+            <div class="mb-3">
+              <label for="image"><b>Upload other images </b><strong style="color: red;">*</strong></label>
+              <input type="file" multiple name="productimage" required />
+            </div>
+            <div class="mb-3">
+              <label><b>Description</b></label
+              ><br />
+              <textarea
+                name="Description"
+                class="box form-control"
+                placeholder="Enter the Description of the Item"
+                required
+              ></textarea>
+            </div>  
+            
+            <div class="send">
+              <button type="submit" class="btn btn-primary" id="button1">
+                Upload</button
+              ><br />
+            </div>
+          </div>
+
         </div>
       </form>
     </div>
   </div>
-  </div>
-  </div>
-  </div>
-  </div>
 </body>
-<footer>
-  <div class="container">
-    <div class="sec aboutus">
-      <h2>About Website</h2>
-      <p>
-        Lorem Ipsum has been the industry's standard dummy text ever since the
-        1500s, when an unknown printer took a galley of type and scrambled it to
-        make a type specimen book. It has survived not only five centuries, but
-        also the leap into electronic typesetting, remaining essentially
-        unchanged.
-      </p>
-      <ul class="sci">
-        <li>
-          <a href="https://www.facebook.com"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-        </li>
-        <li>
-          <a href="https://www.twitter.com"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-        </li>
-      </ul>
-    </div>
-    <div class="sec quickLinks">
-      <h2>Quick Links</h2>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">SellonThrift</a></li>
-        <li><a href="#">FAQs</a></li>
-        <li><a href="#">Terms & Conditions</a></li>
-      </ul>
-    </div>
-    <div class="sec contact">
-      <h2>Contact Info</h2>
-      <ul class="info">
-        <li>
-          <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-          <p><a href="tel:987654321">9745937593759</a><br>
-            <a href="tel:987654321">9745937593759</a>
-          </p>
-        </li>
-        <li>
-          <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-          <p>
-            <a href="Mail:thrifthaul@gmail.com">thrifthaul@gmail.com</a>
-          </p>
-        </li>
-      </ul>
-    </div>
-  </div>
-</footer>
-<div class="copyright">
-  <p>Copyright @ 2022 Thrift Haul. All Rights Reserved.</p>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
+  .sell {
+    justify-content: center;
+
+  }
   .sell-form-section {
     margin-top: 100px;
   }
 
-  footer {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding: 50px 100px;
-    background: #299479;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  .sell-form-section {
+    background-image: url("bg.jpg");
+    background-color: #F5F5F5;
   }
-
-  footer .container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  footer .container .sec {
-    margin-right: 30px;
-  }
-
-  footer .container .sec.aboutus {
-    width: 40%;
-  }
-
-  footer .container h2 {
-    position: relative;
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 15px;
-
-  }
-
-  footer .container h2:before {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 50px;
-    height: 2px;
-    background: white;
-
-  }
-
-  footer .container .sec .aboutus p {
-    color: #999;
-  }
-
-  .sci {
-    margin-top: 20px;
-    display: flex;
-  }
-
-  .sci li {
-    list-style: none;
-  }
-
-  .sci li a {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    background: #222;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-    text-decoration: none;
-    border-radius: 4px;
-  }
-
-  .sci li a:hover {
-    background: #f00;
-  }
-
-  .sci li a .fa {
-    color: #fff;
-    font-size: 20px;
-  }
-
-  .quickLinks {
-    position: relative;
-    width: 25%;
-  }
-
-  .quickLinks ul li {
-    list-style: none;
-  }
-
-  .quickLinks ul li a {
-    text-decoration: none;
-    margin-bottom: 10px;
-    display: inline-block;
-    position: relative;
-    left: 65px;
-    top: 2px
-  }
-
-  .quickLinks ul li a:hover {
-    color: #fff;
-  }
-
   .contact {
     margin-right: 0 !important;
   }
@@ -254,7 +228,7 @@
     margin-right: 10px;
     position: relative;
     left: 60px;
-    top: 2px
+    top: 2px;
   }
 
   .contact .info li a {
@@ -262,7 +236,7 @@
     text-decoration: none;
     position: relative;
     left: 60px;
-    top: 2px
+    top: 2px;
   }
 
   .contact .info li a:hover {
@@ -276,13 +250,17 @@
     text-align: center;
     color: white;
   }
-
+.send {
+  text-align: right;
+}
   #button1 {
-    width: 15%;
+    width: 150px;
     background-color: #299479 !important;
     border: none !important;
-    height: 40px;
+    height: 45px;
     color: white;
+    margin-right: 0;
+    margin-bottom: 17px;
   }
 
   @media (max-width: 991px) {

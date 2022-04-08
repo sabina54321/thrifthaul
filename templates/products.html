@@ -1,3 +1,22 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-
+<div class="container" style="margin-top: 150px;">
+    <div class="row mt-4">
+      {% for product in items %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow">
+          <div class="card-img-top" style="background-image: url({{product.product_image.url}});">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text">Rs {{ product.item_price }}</p>
+            <a href="/productdetail/{{product.id}}"><button class="btn btn-primary item-name">
+              View Details
+            </button></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+     
+    </div>
+  </div>
 {% endblock content %}

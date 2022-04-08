@@ -78,7 +78,7 @@ ul>li>a{
 	background-color: #299479;
 }
 	.img1 { background-image: url("../images/bg.jpg");
-                  height: 100%;
+                  height: 880px;
                   width: 100%;
               }
               /* body,html{
@@ -136,8 +136,8 @@ h2{
 		top: 30%;
 } */
 .small-img-group{
-	display: flex;
-	justify-content: space-between;
+	gap: 39px;
+	margin-top: 36px;
 }
 .small-img-col{
 	flex-basis: 25%;
@@ -179,4 +179,24 @@ h2{
 	margin-top: 90px;
 	max-width: 100%;
 	height: auto;
+}
+.card-img-top{
+	height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover
+}
+.card-img-details{
+	height: 450px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	width: 90%;
+}
+.card-img-details-small{
+	height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	gap: 4.5px;
 }
