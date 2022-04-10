@@ -1,45 +1,12 @@
 from multiprocessing import context
 from re import template
-from .models import ProductImage, product
+from turtle import title
+from projects.forms import ReviewForm
+from .models import ProductImage, ReviewRating, product
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
-# def Register(request):
-#     if request.method == 'POST':
-#         if request.POST.get('Name') and request.POST.get('Email_Address') and request.POST.get('Password'):
-#             saverecord= users()
-#             saverecord.Name = request.POST.get('Name')
-#             saverecord.Email_Address = request.POST.get('Email_Address')
-#             saverecord.Password = request.POST.get('Password')
-#             saverecord.Confirm_Password = request.POST.get('Confirm_Password')
-#             saverecord.save()
-#             messages.success(request,"New User Account Has Been Registered Sucessfully...!")
-#             return render(request, 'Register.html')
-#     else:
-#             return render(request, 'Register.html')  
-
-# def loginUser(request):
-#     if request.method == "POST":
-#         try:
-#             Email = request.POST.get("Email_Address")
-#             Pwd = request.POST.get("Password")
-#             Userdetails = users.objects.get(Email_Address= Email, Password= Pwd)
-#             print("Name=",Userdetails)
-#             request.session['Email_Address']=Userdetails.Email_Address
-#             return redirect('index')    
-#         except users.DoesNotExist as e:
-#             messages.success(request,'Name / Password Invalid..!')
-            
-#     return render(request, 'login.html')
-
-# def logoutUser(request):
-#     try:
-#         del request.session['Email_Address']
-#         return redirect('index') 
-#     except:
-#         return redirect('index') 
 
 
 def home(request):
@@ -66,7 +33,7 @@ def Sell(request):
             prod.price_negotiable = request.POST.get('Negotiable')
             prod.colour = request.POST.get('Colour')
             prod.material = request.POST.get('Material')
-            prod.description = request.POST.get('Description')
+            prod.description = request.POST.get('Description') 
             prod.product_image = request.POST.get('image') 
             prod.stock = request.POST.get('Stock') 
 
@@ -110,6 +77,42 @@ def profile(request):
     productdetail = product.objects.filter(seller__id=request.user.id)
     context = {'productdetail': productdetail}   
     return render(request, 'profile.html', context)
+
+def submitreview(request, id):
+    if request.method == 'POST':
+        subject = request.POST['title']
+        rating = request.POST['rating']
+        review = request.POST['review']
+        data = ReviewRating()
+        data.product_id = id
+        user = request.user
+        data.subject = subject
+        data.rating = rating
+        data.review = review
+        data.user_id = user.id
+        data.save()
+        return render(request, 'productdetail.html')
+        # try:
+        #     reviews = ReviewRating.objects.get(user__id=request.user.id, product__id=id)
+        #     form = ReviewForm(request.POST, instance = reviews)
+        #     form.save()
+        #     messages.SUCCESS(request, 'Thank you! Your review has been updated.')
+        #     return redirect('productdetail')
+
+        # except ReviewRating.DoesNotExist:
+        #     form = ReviewForm(request.POST)
+        #     if form.is_valid():
+        #         data = ReviewRating()
+        #         data.subject = form.cleaned_data["subject"]
+        #         data.rating = form.cleaned_data["rating"]
+        #         data.review = form.cleaned_data["review"]
+        #         data.ip = request.META.get('REMOTE_ADD')
+        #         data.product_id = id
+        #         data.user_id = request.user.id
+        #         data.save()
+        #         messages.SUCCESS(request, 'Thank you! Your review has been submitted.')
+        #         return redirect('productdetail')
+
 
 
 

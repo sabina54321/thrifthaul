@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import ProductImage, product
+from .models import ProductImage, ReviewRating, product
 # from .models import profile
 
 admin.site.register(product)
@@ -10,3 +10,6 @@ admin.site.register(product)
 
 # admin.site.register(profile)
 admin.site.register(ProductImage)
+
+
+admin.site.register(ReviewRating)

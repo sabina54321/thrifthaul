@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeErr
 from authentication.models import User
 from .utils import generate_token
 from django.core.mail import EmailMessage
-from django.conf import settings
+from django.conf import settings 
 
 # Create your views here.
 

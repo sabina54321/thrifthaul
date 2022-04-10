@@ -1,4 +1,5 @@
 # from ast import pattern
+from unicodedata import name
 from django.urls import path
 from . import views
 
@@ -10,4 +11,5 @@ urlpatterns = [
     path('search/', views.search , name='search'),
     path('profile/', views.profile , name='profile'),
     path('productdelete/<int:id>', views.deleteproduct, name='productdelete'),
+    path('submitreview/<int:id>', views.submitreview, name='submitreview'),
 ] 
