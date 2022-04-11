@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 bg-img py-5 text-center text-light">
+            <h1>Dashboard &gt; Edit Profile</h1>
+        </div>
+        <div class="col-md-6 mx-auto p-3 bg-light my-2">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" name="fname" placeholder="Enter First Name" value="{{user.first_name}}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" value="{{user.last_name}}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Username</label>
+                            <input type="text" class="form-control" name="uname" placeholder="Enter Username Name" value="{{user.username}}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Contact Number</label>
+                            <input type="text" value="{{user.phone_number}}" class="form-control" name="contact" placeholder="Enter Contact Number" pattern="[0-9]{10}" title="Number must contain 10 digits only!!">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Address</label>
+                            <input type="text" class="form-control" name="address" placeholder="Enter you address" value="{{user.address}}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Profile Picture</label>
+                            <input type="file" class="form-control" name="image">
+                        </div>
+                    </div>
+                    <input type="submit" name="changeprofile" value="Save Changes" class="btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .bg-img{
+    background:url("/static/images/cover.jpg");
+}
+    .btn{
+        background-color:#299479;
+        color: white; 
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}

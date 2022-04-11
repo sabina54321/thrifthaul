@@ -5,13 +5,32 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card shadow">
-                    <div class="profile-image mt-5 mb-4" style=" background-image: url('{% static 'images/slider.jpg' %}'); "></div>
+                    <div class="profile-image mt-5 mb-4" style=" background-image: url({{user.profileimage.url}});"></div>
                     <div class="card-body">
-                        <button class="btn btn-primary item-name mb-4">
-                            Upload Picture
+                        <button class="btn btn-primary item-name mb-2" onclick="location.href = '/editprofile'">
+                            Edit Profile
                           </button>
+                          <hr>
+                          <div class="d-flex justify-content-between mb-2">
+                            <h5 class="card-title profile-username"><strong> Full Name : </strong></h5>
+                        <h5 class="card-title profile-username">{{ user.first_name }} {{ user.last_name }}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title profile-username"><strong>Username : </strong></h5>
                         <h5 class="card-title profile-username">{{ user.username }}</h5>
-                        <h5 class="card-title profile-email">{{ user.email }}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title profile-username"><strong>Address : </strong></h5>
+                        <h5 class="card-title profile-username">{{ user.address }}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title profile-username"><strong>Phone Number :  </strong></h5>
+                        <h5 class="card-title profile-username">{{ user.phone_number }}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title profile-username"><strong>Email : </strong> </h5>
+                        <h5 class="card-title profile-email">{{ user.email|truncatechars:20 }}</h5>
+                    </div>
                     </div>
                 </div>
             </div>

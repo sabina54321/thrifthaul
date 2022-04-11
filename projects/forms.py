@@ -8,10 +8,9 @@ class ProductForm(forms.Form):
     price = forms.FloatField()
 
 class ReviewForm(ModelForm):
-    subject = forms.CharField(max_length=100, required=False)
-    review = forms.CharField(widget = forms.Textarea, max_length=100, required=False)
-    rating = forms.IntegerField(required=False)
+    review = forms.CharField(widget = forms.Textarea, max_length=1000, required=False)
+    rating = forms.FloatField(required=False)
     class Meta:
         model = ReviewRating
-        fields = ['subject', 'review', 'rating']    
+        fields = ['review', 'rating']    
     

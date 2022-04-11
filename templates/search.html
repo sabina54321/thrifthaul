@@ -10,7 +10,8 @@
       {% for product in items %}
       <div class="col-md-4 mb-4">
         <div class="card shadow">
-          <img src="{{ product.product_image.url }}" class="card-img-top" alt="Sweartshirt" style="height: 350px;" />
+          <div class="card-img-top" style="background-image: url({{product.product_image.url}});">
+          </div>
           <div class="card-body">
             <h5 class="card-title">{{ product.title }}</h5>
             <p class="card-text">Rs {{ product.item_price }}</p>

@@ -6,9 +6,12 @@ import imp
 from pyexpat import model
 from re import T
 from tkinter import CASCADE
+from xmlrpc.client import Boolean
 from django.db import models
 from django.contrib.auth.models import User
 import os
+
+from django.forms import BooleanField
 from authentication.models import User
 
 def filepath(request, filename):
@@ -72,24 +75,15 @@ class ProductImage(models.Model):
     def __str__(self):
         return self.product.title 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    phone_number = models.CharField(max_length=15, blank=True)
-    profile_image = models.ImageField(upload_to="productimg", null=True, blank=True)
-
-    def __str__(self):
-        return str(self.user.username) 
-
 class ReviewRating(models.Model):
     product = models.ForeignKey(product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=100, blank=True)
     review = models.TextField(max_length=500, blank=True)
     rating = models.FloatField(blank=True, default=0)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.subject 
+        return self.product.title
 
 
 

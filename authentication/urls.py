@@ -6,4 +6,6 @@ urlpatterns = [
     path('register/',views.signup, name='register'),
     path('logout/',views.logoutuser,name='logout'),
     path('activate_user/<useridb64>/<token>',views.activate_user,name='activate'),
+    # path('activate_user/<useridb64>/<token>',views.activate_user,name='activate'),
+    path('editprofile/', views.editprofile , name='editprofile'),
 ]

@@ -44,16 +44,11 @@
     </section>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <header class="section-heading">
-        <h3><b>Customer Reviews</b></h3>
-      </header>
-    </div>
-  </div>
+    <div class="col-md-6">
     <form action="{% url 'submitreview' productDetails.id %}" method="POST">
       {% csrf_token %}
       <h5><b>Write Your Review</b></h5>
-      <div>
+      <div style="width: 90%;">
         <label>How do you rate this product?</label><br>
         <div class="rate">
           <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
@@ -67,20 +62,31 @@
 					<input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
 					<input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
         </div><br>
-        Review Title:
-        <input type="text" name="title" class ="form-control" required>
-        <br>
-        Review:
+        <label for ="Review">Your Review</label>
         <textarea name="review" rows="4" class ="form-control" ></textarea>
         <br>
         {% if user.is_authenticated %}
-        <button type="submit" class="btn " id = "review-button">Submit Review</button>
+        <button type="submit" class="btn mb-5" id = "review-button">Submit Review</button>
         {% else %}
         <p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
         {% endif %}
       </div>
     </form>
-    <br>
+  </div>
+
+  <div class="col-md-6">
+    <div class="section-heading">
+      <h5><b>Customer Reviews</b></h5>
+      {% for review in reviews %}
+      <div class="card shadow mt-5">
+        <div class="card-body">
+          <h4 class = "card-title">{{review.review}}</h4>
+        </div>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+  </div>
   </div>
 </body>
   <script>

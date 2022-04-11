@@ -1,6 +1,8 @@
+from atexit import register
 from multiprocessing import context
 from re import template
 from turtle import title
+from authentication.views import signup
 from projects.forms import ReviewForm
 from .models import ProductImage, ReviewRating, product
 from django.shortcuts import redirect, render
@@ -51,8 +53,10 @@ def Sell(request):
 
 def productdetail(request, id):
     items = product.objects.filter(id = id)
+    reviews = ReviewRating.objects.filter(id = id)
     context={
-        "productDetails": items[0]
+        "productDetails": items[0],
+        "reviews": reviews,
     }
     return render(request, 'productdetail.html', context)
 
@@ -79,39 +83,22 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 def submitreview(request, id):
-    if request.method == 'POST':
-        subject = request.POST['title']
-        rating = request.POST['rating']
-        review = request.POST['review']
-        data = ReviewRating()
-        data.product_id = id
-        user = request.user
-        data.subject = subject
-        data.rating = rating
-        data.review = review
-        data.user_id = user.id
-        data.save()
-        return render(request, 'productdetail.html')
-        # try:
-        #     reviews = ReviewRating.objects.get(user__id=request.user.id, product__id=id)
-        #     form = ReviewForm(request.POST, instance = reviews)
-        #     form.save()
-        #     messages.SUCCESS(request, 'Thank you! Your review has been updated.')
-        #     return redirect('productdetail')
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
 
-        # except ReviewRating.DoesNotExist:
-        #     form = ReviewForm(request.POST)
-        #     if form.is_valid():
-        #         data = ReviewRating()
-        #         data.subject = form.cleaned_data["subject"]
-        #         data.rating = form.cleaned_data["rating"]
-        #         data.review = form.cleaned_data["review"]
-        #         data.ip = request.META.get('REMOTE_ADD')
-        #         data.product_id = id
-        #         data.user_id = request.user.id
-        #         data.save()
-        #         messages.SUCCESS(request, 'Thank you! Your review has been submitted.')
-        #         return redirect('productdetail')
+        if form.is_valid():
+            data = ReviewRating()
+            data.review = form.cleaned_data["review"]
+            data.rating = form.cleaned_data["rating"]
+            data.product_id = id
+            user = request.user
+            data.user_id = user.id
+            data.save()
+            return redirect(request.META["HTTP_REFERER"])
+
+
+
+
 
 
 

@@ -97,3 +97,30 @@ def activate_user(request, useridb64, token):
 
 
     return render(request,'authentication/activate-failed.html', {"user":user})
+
+def editprofile(request):
+    # context = {}
+    # data = User.objects.get(user__id=request.user.id)
+    # context["data"]=data
+    if request.method == "POST":
+        fn = request.POST["fname"]
+        ln = request.POST["lname"]
+        un = request.POST["uname"]
+        con = request.POST["contact"]
+        add = request.POST["address"]
+        pp = request.FILES["image"]
+
+        user = User.objects.get(id=request.user.id)
+        user.first_name = fn
+        user.last_name = ln
+        user.username = un
+        user.phone_number = con
+        user.address = add
+        user.profileimage = pp
+        user.save()
+        return redirect('profile')
+    return render(request, 'editprofile.html')
+
+# def RequestReset(request):
+#     if request.method == "GET":
+#         return render(request=)
