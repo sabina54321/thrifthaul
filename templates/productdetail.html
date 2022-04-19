@@ -1,178 +1,258 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<body>
-    <section class = "container dproduct my-5 pt-5">
-        <div class = "row mt-5">
-            <div class = "col-lg-5 col-md-12 col-12">
-              <div class="card-img-details" id="productImg" style="background-image: url({{productDetails.product_image.url}});">
-              </div>
-                <div class = "small-img-group d-flex justify-content-start">
-                  {% for pi in productDetails.productimage_set.all %}
-                    <div class = "small-img-col">
-                      <div class="card-img-details-small" style="background-image: url({{pi.image.url}});">
-                      </div>  
-                      </div>
-                      {% endfor %}
-                </div>
-            </div>
-            <div class = "col-lg-6 col-md-12 col-12 seller-form-section">
-                <div class="seller-details">
-                <h3><b>Seller Details</b><br><br>
-                Sold by: {{productDetails.seller}}<br>
-                Phone Number:{{productDetails.phone_number}} <br>
-                Location:{{productDetails.address}}<br>
-                EmailAddress:{{productDetails.email_address}}<br>
-            </h3>
-        </div><br>
-        <div class="row mt-5">
-          <div class="col-md-6 negotiable">
-            <h3><b>Pricing Details</b><br><br>
-                Price:{{productDetails.item_price}} <br>
-                Pricing Negotiable:{{productDetails.price_negotiable}} <br>
-            </h3>
-        </div>
-        <div class="col-md-6 product-detail">
-            <h3><b>Product Details</b><br><br>
-                Condition:{{productDetails.condition}} <br>
-                Rating: <br>
-            </h3>
-        </div>
-        </div>
-            </div>
-        </div>
-    </section>
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-    <form action="{% url 'submitreview' productDetails.id %}" method="POST">
-      {% csrf_token %}
-      <h5><b>Write Your Review</b></h5>
-      <div style="width: 90%;">
-        <label>How do you rate this product?</label><br>
-        <div class="rate">
-          <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
-					<input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
-					<input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
-					<input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
-					<input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
-					<input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
-					<input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2"></label>
-					<input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
-					<input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
-					<input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
-        </div><br>
-        <label for ="Review">Your Review</label>
-        <textarea name="review" rows="4" class ="form-control" ></textarea>
-        <br>
-        {% if user.is_authenticated %}
-        <button type="submit" class="btn mb-5" id = "review-button">Submit Review</button>
-        {% else %}
-        <p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
-        {% endif %}
-      </div>
-    </form>
-  </div>
 
-  <div class="col-md-6">
-    <div class="section-heading">
-      <h5><b>Customer Reviews</b></h5>
-      {% for review in reviews %}
-      <div class="card shadow mt-5">
-        <div class="card-body">
-          <h4 class = "card-title">{{review.review}}</h4>
+<body>
+  <section class="container dproduct my-5 pt-5">
+    <div class="row mt-5">
+      <div class="col-lg-5">
+        <div class="card-img-details" id="productImg"
+          style="background-image: url({{productDetails.product_image.url}});">
         </div>
+        <div class="small-img-group d-flex justify-content-start">
+          {% for pi in productDetails.productimage_set.all %}
+          <div class="small-img-col">
+            <div class="card-img-details-small" style="background-image: url({{pi.image.url}});">
+            </div>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
-  </div>
-  </div>
+      <div class="col-lg-4 seller-form-section">
+        <div class="seller-details" style="width: 90%;">
+          <h5><b>Seller Details</b></h5>
+          <div>
+            <div class="d-flex justify-content-between mb-2">
+              <h6>Sold By: </h6>
+              <h6>{{productDetails.seller_name}}</h6>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <h6>Phone Number: </h6>
+              <h6>{{productDetails.phone_number}}</h6>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <h6>Location: </h6>
+              <h6>{{productDetails.address}}</h6>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <h6>EmailAddress: </h6>
+              <h6>{{productDetails.email_address}}</h6>
+            </div>
+          </div>
+        </div>
+        <hr style="width: 90%;">
+        <div class="row mt-5">
+          <div class="negotiable" style="width: 90%;">
+            <h5><b>Pricing Details</b></h5>
+            <div>
+              <div class="d-flex justify-content-between mb-2">
+                <h6>Price: </h6>
+                <h6>{{productDetails.item_price}}</h6>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <h6>Price Negotiable: </h6>
+                <h6>{{productDetails.price_negotiable}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr style="width: 90%;">
+        <div class="row mt-5">
+          <div class="product-detail" style="width: 90%;">
+            <h5><b>Product Details</b></h5>
+            <div>
+              <div class="d-flex justify-content-between mb-2">
+                <h6>Condition: </h6>
+                <h6>{{productDetails.condition}}</h6>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <h6>Size: </h6>
+                <h6>{{productDetails.size}}</h6>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <h6>Colour: </h6>
+                <h6>{{productDetails.colour}}</h6>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <h6>Material: </h6>
+                <h6>{{productDetails.material}}</h6>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <h6>Rating: </h6>
+                <h6>{{productDetails.rating}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr style="width: 90%;">
+      </div>
+      <div class="col-lg-3 mb-4">
+        <h5><b>Similar Products</b></h5>
+        <div class="row">
+          {% for product in products.all|slice:"0: 4" %}
+          <div class="col-lg-6 mb-3">
+            <div class="card bg-transparent border-0">
+              <div class="card-body">
+                <a href="/productdetail/{{ product.id }}">
+                  <div class="card-img-similar mb-3" style="background-image: url({{product.product_image.url}});">
+                  </div>
+                </a>
+                <div>
+                  <h6 class="card-title">{{ product.title }}</h6>
+                  <h6 class="card-text">Rs {{ product.item_price }}</h6>
+                </div>
+                <!-- <hr>
+                  <button class="btn btn-primary item-name" onclick="location.href = '/productdetail/{{ product.id }}'">
+                    View Details
+                  </button> -->
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <form action="{% url 'submitreview' productDetails.id %}" method="POST">
+          {% csrf_token %}
+          <h6><b>Write Your Review</b></h6>
+          <div style="width: 90%;">
+            <label>How do you rate this product?</label><br>
+            <div class="rate">
+              <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10"
+                title="5"></label>
+              <input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5"
+                class="half"></label>
+              <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8"
+                title="4"></label>
+              <input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5"
+                class="half"></label>
+              <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6"
+                title="3"></label>
+              <input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5"
+                class="half"></label>
+              <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4"
+                title="2"></label>
+              <input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5"
+                class="half"></label>
+              <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2"
+                title="1"></label>
+              <input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5"
+                class="half"></label>
+            </div><br>
+            <label for="Review">Your Review</label>
+            <textarea name="review" rows="4" class="form-control"></textarea>
+            <br>
+            {% if user.is_authenticated %}
+            <button type="submit" class="btn mb-5" id="review-button">Submit Review</button>
+            {% else %}
+            <p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <div class="section-heading">
+          <h6><b>Customer Reviews</b></h6>
+          {% for review in reviews %}
+          <div class="card shadow mt-5">
+            <div class="card-body">
+              <h4 class="card-title">{{review.review}}</h4>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </div>
 </body>
-  <script>
-      var productImg = document.getElementById("productImg");
-      var smallimg = document.getElementsByClassName("card-img-details-small");
+<script>
+  var productImg = document.getElementById("productImg");
+  var smallimg = document.getElementsByClassName("card-img-details-small");
 
-        smallimg[0].onclick = function(){
-          console.log(smallimg[0].style.backgroundImage)
-          productImg.style.backgroundImage =  smallimg[0].style.backgroundImage;
-      }
-        smallimg[1].onclick = function(){
-          productImg.style.backgroundImage = smallimg[1].style.backgroundImage;
-    }
-        smallimg[2].onclick = function(){
-          productImg.style.backgroundImage = smallimg[2].style.backgroundImage;
+  smallimg[0].onclick = function () {
+    console.log(smallimg[0].style.backgroundImage)
+    productImg.style.backgroundImage = smallimg[0].style.backgroundImage;
   }
-  </script>
-  <style>
-    .negotiable{
-        float: right;
-      }
-    .product-detail{
-        float: left;
-    }
-    .small-img-col{
-        flex-basis: 25%;
-        cursor: pointer;
-        width: 50px;
-        overflow: hidden;
-    }
-    .small-img-col:hover{
-        transform: scale(1.2);
-    }
+  smallimg[1].onclick = function () {
+    productImg.style.backgroundImage = smallimg[1].style.backgroundImage;
+  }
+  smallimg[2].onclick = function () {
+    productImg.style.backgroundImage = smallimg[2].style.backgroundImage;
+  }
+</script>
+<style>
+  .small-img-col {
+    flex-basis: 25%;
+    cursor: pointer;
+    width: 50px;
+    overflow: hidden;
+  }
 
-    #review-button{
-      background-color: #299479;
-      color: white;
-      width: 150px;
-      height: 45px;
+  .small-img-col:hover {
+    transform: scale(1.2);
+  }
 
-    }
+  #review-button {
+    background-color: #299479;
+    color: white;
+    width: 150px;
+    height: 45px;
+
+  }
+
   /* Hide radio button */
-    .rate > input{
-      display: none;
-    }
+  .rate>input {
+    display: none;
+  }
 
-    .rate{
-      display: inline-block;
-      border: 0;
-    }
-    .rate > label{
-      float: right;
+  .rate {
+    display: inline-block;
+    border: 0;
+  }
 
-    }
+  .rate>label {
+    float: right;
 
-    /* showing Start */
-    .rate > label:before{
-      display: inline-block;
-      font-size: 1.1rem;
-      font-family: FontAwesome;
-      content: "\f005";
-      margin: 0;
-      padding: 0.3rem .2rem;
-      cursor: pointer;
+  }
 
-    }
+  /* showing Start */
+  .rate>label:before {
+    display: inline-block;
+    font-size: 1.1rem;
+    font-family: FontAwesome;
+    content: "\f005";
+    margin: 0;
+    padding: 0.3rem .2rem;
+    cursor: pointer;
 
-    /* half star */
-    .rate .half::before{
-      content: "\f089";
-      position: absolute;
-      padding-right: 0;
-    }
+  }
 
-    /* click and hover star */
-    input:checked ~ label, label:hover ~ label{
-      color: #ffb503;
+  /* half star */
+  .rate .half::before {
+    content: "\f089";
+    position: absolute;
+    padding-right: 0;
+  }
 
-    }
+  /* click and hover star */
+  input:checked~label,
+  label:hover~label {
+    color: #ffb503;
 
-    /* hover highlight */
-    input:checked + label:hover, input:checked ~ label:hover, 
-    input:checked ~ label:hover ~ label, label:hover ~ input:checked ~ label{
-      color: #cc9000;
-      
-    }
+  }
 
+  /* hover highlight */
+  input:checked+label:hover,
+  input:checked~label:hover,
+  input:checked~label:hover~label,
+  label:hover~input:checked~label {
+    color: #cc9000;
+
+  }
 </style>
 {% endblock content %}

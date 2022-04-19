@@ -10,7 +10,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-
 def home(request):
      items = product.objects.all()[0:6]
      image = product.objects.all()[6:12]
@@ -53,17 +52,19 @@ def Sell(request):
 
 def productdetail(request, id):
     items = product.objects.filter(id = id)
-    reviews = ReviewRating.objects.filter(id = id)
+    reviews = ReviewRating.objects.filter(product_id = id)
+    products = product.objects.all()
     context={
         "productDetails": items[0],
-        "reviews": reviews,
+         "reviews": reviews,
+         "products": products
     }
     return render(request, 'productdetail.html', context)
 
 def products(request):
      items = product.objects.all()
      context = {'items':items}  
-     return render(request, 'products.html', context)
+     return render(request, 'products.html', context) 
 
 def deleteproduct(request,id):
     if request.method == "POST":
@@ -81,6 +82,11 @@ def profile(request):
     productdetail = product.objects.filter(seller__id=request.user.id)
     context = {'productdetail': productdetail}   
     return render(request, 'profile.html', context)
+
+def buyerviewprofile(request):
+    productdetail = product.objects.filter(seller__id=request.user.id)
+    context = {'productdetail': productdetail} 
+    return render(request, 'buyerviewprofile.html', context)
 
 def submitreview(request, id):
     if request.method == "POST":

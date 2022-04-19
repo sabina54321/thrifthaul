@@ -45,7 +45,7 @@ SIZE_CHOICES = (
 
 NEGOTIABLE_CHOICES = (
     ('Y', 'Yes'),
-    ('N', 'No'),
+    ('N', 'No'),                                                                                                                
 )
 class product(models.Model):
     seller_name = models.CharField(max_length=100, null=True, blank=True)

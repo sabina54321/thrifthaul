@@ -80,7 +80,7 @@
   <br />
   <!-- container -->
   <div class="container">
-    <h3 class="mt-4"><b>Explore The Collection </b></h3>
+    <h3 class="mt-4 explore-the-collection"><b>Explore The Collection </b></h3>
     <div class="row mt-4">
       {% for product in items %}
       <div class="col-md-4 mb-4">
@@ -89,8 +89,10 @@
           </div>
           <div class="card-body">
             <h5 class="card-title">{{ product.title }}</h5>
-            <p class="card-text">Rs {{ product.item_price }}</p>
-            <button class="btn btn-primary item-name" onclick="location.href = '/productdetail/{{ product.id }}'">
+            <p class="card-text item-price">Rs {{ product.item_price }}</p>
+            <hr>
+            <a href="buyerviewprofile" class="card-text seller-name">Seller: <b>{{ product.seller_name }}</b></a>
+            <button class="btn btn-primary item-name mt-3" onclick="location.href = '/productdetail/{{ product.id }}'">
               View Details
             </button>
           </div>
@@ -102,7 +104,7 @@
   <br />
   <!-- second container -->
   <div class="container">
-    <h3 class="mt-4"><b>Just For You</b></h3>
+    <h3 class="mt-4 just-for-you"><b>Just For You</b></h3>
     <div class="row mt-4">
       {% for product in image %}
       <div class="col-md-4 mb-4">
@@ -112,7 +114,9 @@
           <div class="card-body">
             <h5 class="card-title">{{ product.title }}</h5>
             <p class="card-text">Rs {{ product.item_price }}</p>
-            <button class="btn btn-primary item-name" onclick="location.href = '/productdetail/{{ product.id }}'">
+            <hr>
+            <a href="buyerviewprofile" class="card-text seller-name">Seller: <b>{{ product.seller_name }}</b></a>
+            <button class="btn btn-primary item-name mt-3" onclick="location.href = '/productdetail/{{ product.id }}'">
               View Details
             </button>
           </div>
@@ -146,6 +150,21 @@
     height: 641.3px;
     background-color: #299479;
     width: 100%;
+  }
+  .seller-name{
+    text-align: left;
+    color: black;
+    text-decoration: none;
+    font-size: small;
+  }
+  .seller-name:hover{
+    color: black;
+  }
+  .explore-the-collection{
+    text-align: center;
+  }
+  .just-for-you{
+    text-align: center;
   }
 </style>
 {% endblock content %}

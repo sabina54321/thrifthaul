@@ -1,4 +1,5 @@
 from base64 import urlsafe_b64decode
+from lib2to3.pgen2 import token
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from email import message
 from multiprocessing import context
@@ -15,8 +16,10 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
 from authentication.models import User
 from .utils import generate_token
+from django.core.validators import validate_email
 from django.core.mail import EmailMessage
 from django.conf import settings 
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 # Create your views here.
 
@@ -61,14 +64,13 @@ def loginuser(request):
         password=request.POST['password']
         user = authenticate(username=username, password=password)
 
-        if not user.is_email_verified:
-            messages.add_message(request, messages.ERROR,
-                                'Email is not verified, please check your email inbox')
-            return render(request, 'authentication/login.html', context)
-
         if user is not None:
             login(request, user)
             return redirect('index')
+        else:
+            messages.add_message(request, messages.ERROR,
+                                'Wrong Credentials')
+            return render(request, 'authentication/login.html') 
 
     return render(request,"authentication/login.html")
 
@@ -99,9 +101,6 @@ def activate_user(request, useridb64, token):
     return render(request,'authentication/activate-failed.html', {"user":user})
 
 def editprofile(request):
-    # context = {}
-    # data = User.objects.get(user__id=request.user.id)
-    # context["data"]=data
     if request.method == "POST":
         fn = request.POST["fname"]
         ln = request.POST["lname"]
@@ -121,6 +120,60 @@ def editprofile(request):
         return redirect('profile')
     return render(request, 'editprofile.html')
 
-# def RequestReset(request):
-#     if request.method == "GET":
-#         return render(request=)
+
+
+def RequestResetPassword(request):
+    if request.method == "GET":
+        return render(request, 'authentication/requestresetpassword.html')
+
+    if request.method == "POST":
+        email = request.POST['email']
+
+        # if not validate_email(email):
+        #     messages.error(request,'Please enter a valid email')
+        #     return render(request, 'authentication/requestresetpassword.html')
+
+        user = User.objects.filter(email=email)
+
+        if user.exists():
+            current_site = get_current_site(request)
+            email_subject = 'Reset your Password'
+            email_body = render_to_string('authentication/resetuserpassword.html',
+            {
+                'domain': current_site.domain,
+                'userid': urlsafe_base64_encode(force_bytes((user[0].pk))),
+                'token': PasswordResetTokenGenerator().make_token(user[0])
+            })
+            emailmessage=EmailMessage(subject=email_subject,body=email_body, 
+                               from_email = settings.EMAIL_FORM_USER,
+                               to=[email]) 
+
+
+            emailmessage.send()
+
+            messages.success(request,'We have sent you an email with instruction on how to reset password')
+            return render(request, 'authentication/requestresetpassword.html')
+        else:
+            messages.success(request,'Invalid Username.')
+            return render(request, 'authentication/requestresetpassword.html')
+
+def SetNewPassword(request, useridb64, token):
+    if request.method == "GET":
+        context = {'useridb64': useridb64, 'token': token}
+        return render(request, 'authentication/setnewpassword.html', context)
+
+    if request.method == "POST":
+        context = {'useridb64': useridb64, 'token': token}
+        password = request.POST.get('password')
+        
+    try:
+        userid = force_str(urlsafe_base64_decode(useridb64))
+
+        user = User.objects.get(pk=userid)
+        user.set_password(password)
+        user.save()
+        messages.add_message(request, messages.SUCCESS, 'Password changed, now you can login')
+        return redirect('login')
+    except Exception as e:
+        messages.add_message(request, messages.SUCCESS, 'Something went wrong')
+        return render(request, 'authentication/setnewpassword.html', context)
