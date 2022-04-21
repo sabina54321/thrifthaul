@@ -114,61 +114,6 @@
     </div>
     </div>
   </section>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <form action="{% url 'submitreview' productDetails.id %}" method="POST">
-          {% csrf_token %}
-          <h6><b>Write Your Review</b></h6>
-          <div style="width: 90%;">
-            <label>How do you rate this product?</label><br>
-            <div class="rate">
-              <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10"
-                title="5"></label>
-              <input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5"
-                class="half"></label>
-              <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8"
-                title="4"></label>
-              <input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5"
-                class="half"></label>
-              <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6"
-                title="3"></label>
-              <input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5"
-                class="half"></label>
-              <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4"
-                title="2"></label>
-              <input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5"
-                class="half"></label>
-              <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2"
-                title="1"></label>
-              <input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5"
-                class="half"></label>
-            </div><br>
-            <label for="Review">Your Review</label>
-            <textarea name="review" rows="4" class="form-control"></textarea>
-            <br>
-            {% if user.is_authenticated %}
-            <button type="submit" class="btn mb-5" id="review-button">Submit Review</button>
-            {% else %}
-            <p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
-            {% endif %}
-          </div>
-        </form>
-      </div>
-      <div class="col-md-6">
-        <div class="section-heading">
-          <h6><b>Customer Reviews</b></h6>
-          {% for review in reviews %}
-          <div class="card shadow mt-5">
-            <div class="card-body">
-              <h4 class="card-title">{{review.review}}</h4>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </div>
 </body>
 <script>
   var productImg = document.getElementById("productImg");
@@ -195,64 +140,6 @@
 
   .small-img-col:hover {
     transform: scale(1.2);
-  }
-
-  #review-button {
-    background-color: #299479;
-    color: white;
-    width: 150px;
-    height: 45px;
-
-  }
-
-  /* Hide radio button */
-  .rate>input {
-    display: none;
-  }
-
-  .rate {
-    display: inline-block;
-    border: 0;
-  }
-
-  .rate>label {
-    float: right;
-
-  }
-
-  /* showing Start */
-  .rate>label:before {
-    display: inline-block;
-    font-size: 1.1rem;
-    font-family: FontAwesome;
-    content: "\f005";
-    margin: 0;
-    padding: 0.3rem .2rem;
-    cursor: pointer;
-
-  }
-
-  /* half star */
-  .rate .half::before {
-    content: "\f089";
-    position: absolute;
-    padding-right: 0;
-  }
-
-  /* click and hover star */
-  input:checked~label,
-  label:hover~label {
-    color: #ffb503;
-
-  }
-
-  /* hover highlight */
-  input:checked+label:hover,
-  input:checked~label:hover,
-  input:checked~label:hover~label,
-  label:hover~input:checked~label {
-    color: #cc9000;
-
   }
 </style>
 {% endblock content %}

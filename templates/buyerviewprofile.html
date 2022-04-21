@@ -5,35 +5,35 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card shadow">
-                    <div class="profile-image mt-5 mb-2" style=" background-image: url({{user.profileimage.url}});"></div>
+                    <div class="profile-image mt-5 mb-2" style=" background-image: url({{productDetails.seller.profileimage.url}});"></div>
                     <div class="card-body">
                           <hr>
                           <div class="d-flex justify-content-between mb-2">
-                            <h5 class="card-title profile-username"><strong> Full Name : </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.first_name }} {{ user.last_name }}</h5>
+                            <h5 class="card-title profile-username"><strong> Full   Name : </strong></h5>
+                        <h5 class="card-title profile-username">{{ productDetails.seller.first_name }}</h5>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5 class="card-title profile-username"><strong>Username : </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.username }}</h5>
+                        <h5 class="card-title profile-username">{{ productDetails.seller.username }}</h5>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5 class="card-title profile-username"><strong>Address : </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.address }}</h5>
+                        <h5 class="card-title profile-username">{{ productDetails.seller.address }}</h5>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5 class="card-title profile-username"><strong>Phone Number :  </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.phone_number }}</h5>
+                        <h5 class="card-title profile-username">{{ productDetails.seller.phone_number }}</h5>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5 class="card-title profile-username"><strong>Email : </strong> </h5>
-                        <h5 class="card-title profile-email">{{ user.email|truncatechars:20 }}</h5>
+                        <h5 class="card-title profile-email">{{ productDetails.seller.email|truncatechars:20 }}</h5>
                     </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
             <div class="row">
-                {% for product in productdetail %}
+                {% for product in products %}
                 <div class="col-md-6 mb-4">
                   <div class="card shadow">
                     <div class="card-img-top" style="background-image: url({{product.product_image.url}});">
@@ -53,6 +53,64 @@
         </div>
         </div>
     </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form action="{% url 'submitreview' productDetails.seller.id %}" method="POST">
+            {% csrf_token %}
+            <h5><strong>Write Your Review for User</strong></h5>
+            <div style="width: 90%;">
+              <label>How do you rate this User?</label><br>
+              <div class="rate">
+                <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10"
+                  title="5"></label>
+                <input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5"
+                  class="half"></label>
+                <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8"
+                  title="4"></label>
+                <input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5"
+                  class="half"></label>
+                <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6"
+                  title="3"></label>
+                <input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5"
+                  class="half"></label>
+                <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4"
+                  title="2"></label>
+                <input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5"
+                  class="half"></label>
+                <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2"
+                  title="1"></label>
+                <input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5"
+                  class="half"></label>
+              </div><br>
+              <label for="Review">Your Review</label>
+              <textarea name="review" rows="4" class="form-control"></textarea>
+              <br>
+              {% if user.is_authenticated %}
+              <button type="submit" class="btn mb-5" id="review-button">Submit Review</button>
+              {% else %}
+              <h5>You must be logged in to post a review.</h5>
+              <button class="btn btn-primary item-name mb-5" id="review-button" onclick="location.href = '/login'">
+                Login Now
+              </button>
+              {% endif %}
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div class="section-heading">
+            <h5><strong>Reviews</strong></h5>
+            {% for review in reviews %}
+            <div class="card shadow mt-5">
+              <div class="card-body">
+                <h4 class="card-title reviews">{{review.review}}</h4>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </div>
 </body>
 
@@ -81,6 +139,66 @@
     .profile-email {
         text-align: center;
     }
+    #review-button {
+    background-color: #299479;
+    color: white;
+    width: 150px;
+    height: 45px;
+
+  }
+
+  /* Hide radio button */
+  .rate>input {
+    display: none;
+  }
+
+  .rate {
+    display: inline-block;
+    border: 0;
+  }
+
+  .rate>label {
+    float: right;
+
+  }
+
+  /* showing Start */
+  .rate>label:before {
+    display: inline-block;
+    font-size: 1.1rem;
+    font-family: FontAwesome;
+    content: "\f005";
+    margin: 0;
+    padding: 0.3rem .2rem;
+    cursor: pointer;
+
+  }
+
+  /* half star */
+  .rate .half::before {
+    content: "\f089";
+    position: absolute;
+    padding-right: 0;
+  }
+
+  /* click and hover star */
+  input:checked~label,
+  label:hover~label {
+    color: #ffb503;
+
+  }
+
+  /* hover highlight */
+  input:checked+label:hover,
+  input:checked~label:hover,
+  input:checked~label:hover~label,
+  label:hover~input:checked~label {
+    color: #cc9000;
+
+  }
+  .reviews{
+    font-size: 20px;
+  }
 </style>
 
-{% endblock content %}
+{% endblock content %}   

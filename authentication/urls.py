@@ -9,4 +9,5 @@ urlpatterns = [
     path('set-new-password/<useridb64>/<token>',views.SetNewPassword,name='set-new-password'),
     path('resetpassword/', views.RequestResetPassword , name='resetpassword'),
     path('editprofile/', views.editprofile , name='editprofile'),
+ 
 ]

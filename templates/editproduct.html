@@ -1,0 +1,124 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 bg-img py-5 text-center text-light">
+            <h1>Dashboard &gt; Edit Profile</h1>
+        </div>
+        <div class="col-md-6 mx-auto p-3 bg-light my-2">
+            <form action="{% url 'editproduct' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" name="pnum" placeholder="Enter phone number" value="{{product.phone_number}}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{product.title}}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Address</label>
+                            <input type="text" class="form-control" name="add" placeholder="Enter address" value="{{product.address}}">
+                        </div>
+                        <div class="dropdown col-md-6 mb-3">
+                            <label for="list" of product><b>Category</b></label
+                            ><br />
+                            <select class="Category" name="category">
+                              <option value="womens wear">Womens Wear</option>
+                              <option value="mens wear">Mens Wear</option>
+                              <option value="kids wear">Kids Wear</option>
+                              <option value="party bag">Party Bag</option>
+                              <option value="hand bag">Hand Bag</option>
+                              <option value="side bag">Side Bag</option></select>
+                              <br/>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label><b>Used for </b><strong style="color: red;">*</strong></label
+                            ><br />
+                            <input
+                              type="text"
+                              name="usedfor"
+                              class="box form-control"
+                              placeholder="Enter the product used for"
+                              value="{{product.used_for}}"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <div class="mb-3">
+                              <label for="condition"><b>Condition of an item </b><strong style="color: red;">*</strong></label
+                              ><br />
+                              <select class="condition" name="condition">
+                                <option value="good">Good</option>
+                                <option value="old">Old</option>
+                                <option value="new">New</option></select
+                              ><br />
+                            </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label><b>Item Price </b><strong style="color: red;">*</strong></label
+                        ><br />
+                        <input
+                          type="text"
+                          name="price"
+                          class="box form-control"
+                          placeholder="Enter the Price of the Item"
+                          value="{{product.item_price}}"
+                          required
+                        />
+                      </div>
+                      <div class=" col-md-6  mb-3">
+                        <label><b>Number of Item in Stock</b></label
+                        ><br />
+                        <input
+                          type="number"
+                          name="stock"
+                          class="box form-control"
+                          placeholder="Enter the Price of the Item"
+                          value="{{product.stock}}"
+                          required
+                        />
+                      </div>
+                      <div class=" col-md-6 mb-3">
+                        <label><b>Colour </b></label
+                        ><br />
+                        <input
+                          type="text"
+                          name="colour"
+                          class="box form-control"
+                          placeholder="Enter the colour of the product"
+                          value="{{product.colour}}"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label><b>Material </b><strong style="color: red;">*</strong></label
+                        ><br />
+                        <input
+                          type="text"
+                          name="material"
+                          class="box form-control"
+                          placeholder="Enter the Material of the product"
+                          value="{{product.material}}"
+                          required
+                        />
+                      </div>
+                    <input type="submit" name="changeprofile" value="Save Changes" class="btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .bg-img{
+    background:url("/static/images/cover.jpg");
+}
+    .btn{
+        background-color:#299479;
+        color: white; 
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}

@@ -66,6 +66,32 @@ def products(request):
      context = {'items':items}  
      return render(request, 'products.html', context) 
 
+def editproduct(request):
+    if request.method == "POST":
+        pn = request.POST["pnum"]
+        title = request.POST["title"]
+        add = request.POST["address"]
+        cat = request.POST["category"]
+        used = request.POST["usedfor"]
+        itemprice = request.POST["price"]
+        stock = request.POST["stock"]
+        colour = request.POST["colour"]
+        material = request.POST["material"]
+
+        product = product.objects.get(id=request.product.id)
+        product.phone_number = pn
+        product.title = title
+        product.address = add
+        product.category = cat
+        product.used_for = used
+        product.item_price = itemprice
+        product.stock = stock
+        product.colour = colour
+        product.material = material
+        product.save()
+        return redirect('profile')
+    return render(request, 'editproduct.html')
+
 def deleteproduct(request,id):
     if request.method == "POST":
         productdetail = product.objects.get(id =id)
@@ -83,9 +109,15 @@ def profile(request):
     context = {'productdetail': productdetail}   
     return render(request, 'profile.html', context)
 
-def buyerviewprofile(request):
-    productdetail = product.objects.filter(seller__id=request.user.id)
-    context = {'productdetail': productdetail} 
+def buyerviewprofile(request, id):
+    items = product.objects.filter(seller__id = id)
+    reviews = ReviewRating.objects.filter(product_id = id)
+    products = product.objects.filter(seller__id = id)
+    context={
+        "productDetails": items[0],
+         "reviews": reviews,
+         "products": products
+    }
     return render(request, 'buyerviewprofile.html', context)
 
 def submitreview(request, id):
@@ -96,7 +128,7 @@ def submitreview(request, id):
             data = ReviewRating()
             data.review = form.cleaned_data["review"]
             data.rating = form.cleaned_data["rating"]
-            data.product_id = id
+            data.seller_id = id
             user = request.user
             data.user_id = user.id
             data.save()
