@@ -53,7 +53,7 @@
                     <div class="w-100">
                       <form action="/productdelete/{{product.id}}" method="POST">
                           {% csrf_token %}
-                      <button class="btn btn-primary item-name">
+                      <button class="btn btn-primary item-name" onclick="location.href = '/confirmdelete/{{product.id}}'">
                         Delete
                       </button>
                     </form>

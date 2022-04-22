@@ -66,7 +66,11 @@ def products(request):
      context = {'items':items}  
      return render(request, 'products.html', context) 
 
-def editproduct(request):
+def editproduct(request,id):
+    if request.method == "GET":
+        items = product.objects.get(id=id)
+        context = {'items':items}  
+        return render(request, 'editproduct.html', context)
     if request.method == "POST":
         pn = request.POST["pnum"]
         title = request.POST["title"]
@@ -78,25 +82,28 @@ def editproduct(request):
         colour = request.POST["colour"]
         material = request.POST["material"]
 
-        product = product.objects.get(id=request.product.id)
-        product.phone_number = pn
-        product.title = title
-        product.address = add
-        product.category = cat
-        product.used_for = used
-        product.item_price = itemprice
-        product.stock = stock
-        product.colour = colour
-        product.material = material
-        product.save()
+        items = product.objects.get(pk = id)
+        items.seller = request.user
+        items.phone_number = pn
+        items.title = title
+        items.address = add
+        items.category = cat
+        items.used_for = used
+        items.item_price = itemprice
+        items.stock = stock
+        items.colour = colour
+        items.material = material
+        items.save()
         return redirect('profile')
-    return render(request, 'editproduct.html')
 
 def deleteproduct(request,id):
     if request.method == "POST":
         productdetail = product.objects.get(id =id)
         productdetail.delete()
         return redirect ('profile')
+
+def confirmdelete(request):
+     return render(request, 'confirmdelete.html', context)
 
 def search(request):  
     query = request.GET["query"]

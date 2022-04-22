@@ -115,7 +115,7 @@
             <h5 class="card-title">{{ product.title }}</h5>
             <p class="card-text">Rs {{ product.item_price }}</p>
             <hr>
-            <a href="buyerviewprofile" class="card-text seller-name">Seller: <b>{{ product.seller_name }}</b></a>
+            <a href="buyerviewprofile/{{ product.seller_id }}" class="card-text seller-name">Seller: <b>{{ product.seller_name }}</b></a>
             <button class="btn btn-primary item-name mt-3" onclick="location.href = '/productdetail/{{ product.id }}'">
               View Details
             </button>
