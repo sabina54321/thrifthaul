@@ -1,99 +1,133 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
 <body>
-    <div class="container profile-section">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card shadow">
-                    <div class="profile-image mt-5 mb-4" style=" background-image: url({{user.profileimage.url}});"></div>
-                    <div class="card-body">
-                        <button class="btn btn-primary item-name mb-2" onclick="location.href = '/editprofile'">
-                            Edit Profile
-                          </button>
-                          <hr>
-                          <div class="d-flex justify-content-between mb-2">
-                            <h5 class="card-title profile-username"><strong> Full Name : </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.first_name }} {{ user.last_name }}</h5>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <h5 class="card-title profile-username"><strong>Username : </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.username }}</h5>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <h5 class="card-title profile-username"><strong>Address : </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.address }}</h5>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <h5 class="card-title profile-username"><strong>Phone Number :  </strong></h5>
-                        <h5 class="card-title profile-username">{{ user.phone_number }}</h5>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <h5 class="card-title profile-username"><strong>Email : </strong> </h5>
-                        <h5 class="card-title profile-email">{{ user.email|truncatechars:20 }}</h5>
-                    </div>
-                    </div>
-                </div>
+  <div class="container profile-section">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card shadow">
+          <div
+            class="profile-image mt-5 mb-4"
+            style=" background-image: url({{user.profileimage.url}});"
+          ></div>
+          <div class="card-body">
+            <button
+              class="btn btn-primary item-name mb-2"
+              onclick="location.href = '/editprofile'"
+            >
+              Edit Profile
+            </button>
+            <hr />
+            <div class="d-flex justify-content-between mb-2">
+              <h5 class="card-title profile-username">
+                <strong> Full Name : </strong>
+              </h5>
+              <h5 class="card-title profile-username">
+                {{ user.first_name }} {{ user.last_name }}
+              </h5>
             </div>
-            <div class="col-md-8">
-            <div class="row">
-                {% for product in productdetail %}
-                <div class="col-md-6 mb-4">
-                  <div class="card shadow">
-                    <div class="card-img-top" style="background-image: url({{product.product_image.url}});">
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">{{ product.title }}</h5>
-                      <p class="card-text">Rs {{ product.item_price }}</p>
-                      <div class = "d-flex justify-content-between gap-3">
-                          <div class="w-100">
-                      <button class="btn btn-primary item-name " onclick="location.href = '/editproduct/{{product.id}}'">
-                        Edit
-                      </button>
-                    </div>
-                    <div class="w-100">
-                      <form action="/productdelete/{{product.id}}" method="POST">
-                          {% csrf_token %}
-                      <button class="btn btn-primary item-name" onclick="location.href = '/confirmdelete/{{product.id}}'">
+            <div class="d-flex justify-content-between mb-2">
+              <h5 class="card-title profile-username">
+                <strong>Username : </strong>
+              </h5>
+              <h5 class="card-title profile-username">{{ user.username }}</h5>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <h5 class="card-title profile-username">
+                <strong>Address : </strong>
+              </h5>
+              <h5 class="card-title profile-username">{{ user.address }}</h5>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <h5 class="card-title profile-username">
+                <strong>Phone Number : </strong>
+              </h5>
+              <h5 class="card-title profile-username">
+                {{ user.phone_number }}
+              </h5>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <h5 class="card-title profile-username">
+                <strong>Email : </strong>
+              </h5>
+              <h5 class="card-title profile-email">
+                {{ user.email|truncatechars:20 }}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          {% for product in productdetail %}
+          <div class="col-md-6 mb-4">
+            <div class="card shadow">
+              <div
+                class="card-img-top"
+                style="background-image: url({{product.product_image.url}});"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">{{ product.title }}</h5>
+                <p class="card-text">Rs {{ product.item_price }}</p>
+                {% if product.status == True %}
+                <div class="d-flex justify-content-between gap-3">
+                  <div class="w-100">
+                    <button
+                      class="btn btn-primary item-name"
+                      onclick="location.href = '/editproduct/{{product.id}}'"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <div class="w-100">
+                    <form action="/productdelete/{{product.id}}" method="POST">
+                      {% csrf_token %}
+                      <button class="btn btn-primary item-name" type="submit">
                         Delete
                       </button>
                     </form>
-                </div>
-                    </div>
-                    </div>
                   </div>
                 </div>
-                {% endfor %}
+                {% else %}
+                <button
+                class="btn btn-primary item-name"
+              >
+                Unpublished
+              </button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
-        </div>
+      </div>
     </div>
-    </div>
+  </div>
 </body>
 
 <style>
-    .profile-section {
-        margin-top: 200px;
-        margin-bottom: 200px;
-    }
+  .profile-section {
+    margin-top: 200px;
+    margin-bottom: 200px;
+  }
 
-    .profile-image {
-        height: 150px;
-        width: 150px;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        border-radius: 100px;
-        display: flex;
-        align-self: center;
+  .profile-image {
+    height: 150px;
+    width: 150px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 100px;
+    display: flex;
+    align-self: center;
+  }
 
-    }
+  .profile-username {
+    text-align: center;
+  }
 
-    .profile-username {
-        text-align: center;
-    }
-
-    .profile-email {
-        text-align: center;
-    }
+  .profile-email {
+    text-align: center;
+  }
 </style>
 
 {% endblock content %}

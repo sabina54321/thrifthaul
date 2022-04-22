@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 def home(request):
-     items = product.objects.all()[0:6]
-     image = product.objects.all()[6:12]
+     items = product.objects.filter(status=True)[0:6]
+     image = product.objects.filter(status=True)[6:12]
      context = {'items':items, 'image': image}  
      return render(request, 'index.html', context)
 
@@ -33,8 +33,7 @@ def Sell(request):
             prod.item_price = request.POST.get('Price')
             prod.price_negotiable = request.POST.get('Negotiable')
             prod.colour = request.POST.get('Colour')
-            prod.material = request.POST.get('Material')
-            prod.description = request.POST.get('Description') 
+            prod.material = request.POST.get('Material') 
             prod.product_image = request.POST.get('image') 
             prod.stock = request.POST.get('Stock') 
 
@@ -62,7 +61,7 @@ def productdetail(request, id):
     return render(request, 'productdetail.html', context)
 
 def products(request):
-     items = product.objects.all()
+     items = product.objects.filter(status=True)
      context = {'items':items}  
      return render(request, 'products.html', context) 
 
@@ -98,12 +97,10 @@ def editproduct(request,id):
 
 def deleteproduct(request,id):
     if request.method == "POST":
-        productdetail = product.objects.get(id =id)
-        productdetail.delete()
+        productdetail = product.objects.get(pk=id)
+        productdetail.status=False
+        productdetail.save()
         return redirect ('profile')
-
-def confirmdelete(request):
-     return render(request, 'confirmdelete.html', context)
 
 def search(request):  
     query = request.GET["query"]
@@ -117,9 +114,9 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 def buyerviewprofile(request, id):
-    items = product.objects.filter(seller__id = id)
+    items = product.objects.filter(seller__id = id, status = True)
     reviews = ReviewRating.objects.filter(product_id = id)
-    products = product.objects.filter(seller__id = id)
+    products = product.objects.filter(seller__id = id, status = True)
     context={
         "productDetails": items[0],
          "reviews": reviews,

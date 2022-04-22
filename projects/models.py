@@ -63,8 +63,8 @@ class product(models.Model):
     colour = models.CharField(max_length=50, null=True, blank=True)
     material = models.CharField(max_length=50, null=True, blank=True)
     product_image = models.ImageField(upload_to="productimg", null=True, blank=True)
-    description = models.TextField()
     stock = models.IntegerField(default=0)
+    status =  models.BooleanField(default=False)
     def __str__(self):
         return str(self.title) 
 
