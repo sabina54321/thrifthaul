@@ -7,12 +7,13 @@ from projects.forms import ReviewForm
 from .models import ProductImage, ReviewRating, product
 from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 def home(request):
-     items = product.objects.filter(status=True)[0:6]
-     image = product.objects.filter(status=True)[6:12]
+     items = product.objects.filter(status=True, deletestatus=False)[0:6]
+     image = product.objects.filter(status=True, deletestatus=False)[6:12]
      context = {'items':items, 'image': image}  
      return render(request, 'index.html', context)
 
@@ -52,18 +53,18 @@ def Sell(request):
 def productdetail(request, id):
     items = product.objects.filter(id = id)
     reviews = ReviewRating.objects.filter(product_id = id)
-    products = product.objects.all()
+    products = product.objects.filter(status=True, deletestatus=False)
     context={
+        "reviews": reviews,
         "productDetails": items[0],
-         "reviews": reviews,
-         "products": products
+        "products": products
     }
     return render(request, 'productdetail.html', context)
 
 def products(request):
-     items = product.objects.filter(status=True)
-     context = {'items':items}  
-     return render(request, 'products.html', context) 
+    items = product.objects.filter(status=True, deletestatus=False)
+    context = {'items':items}  
+    return render(request, 'products.html', context) 
 
 def editproduct(request,id):
     if request.method == "GET":
@@ -98,7 +99,7 @@ def editproduct(request,id):
 def deleteproduct(request,id):
     if request.method == "POST":
         productdetail = product.objects.get(pk=id)
-        productdetail.status=False
+        productdetail.deletestatus=True
         productdetail.save()
         return redirect ('profile')
 
@@ -109,17 +110,15 @@ def search(request):
     return render(request, 'search.html', context)
 
 def profile(request):
-    productdetail = product.objects.filter(seller__id=request.user.id)
+    productdetail = product.objects.filter(seller__id=request.user.id, deletestatus=False)
     context = {'productdetail': productdetail}   
-    return render(request, 'profile.html', context)
+    return render(request, 'profile.html', context) 
 
 def buyerviewprofile(request, id):
-    items = product.objects.filter(seller__id = id, status = True)
-    reviews = ReviewRating.objects.filter(product_id = id)
-    products = product.objects.filter(seller__id = id, status = True)
+    items = product.objects.filter(seller__id = id, status = True, deletestatus=False)
+    products = product.objects.filter(seller__id = id, status = True, deletestatus=False)
     context={
         "productDetails": items[0],
-         "reviews": reviews,
          "products": products
     }
     return render(request, 'buyerviewprofile.html', context)
@@ -127,16 +126,39 @@ def buyerviewprofile(request, id):
 def submitreview(request, id):
     if request.method == "POST":
         form = ReviewForm(request.POST)
-
         if form.is_valid():
             data = ReviewRating()
             data.review = form.cleaned_data["review"]
             data.rating = form.cleaned_data["rating"]
-            data.seller_id = id
+            data.product_id = id
             user = request.user
             data.user_id = user.id
             data.save()
             return redirect(request.META["HTTP_REFERER"])
+
+        else:
+            return redirect(request.META["HTTP_REFERER"]) 
+
+def terms(request):
+    return render(request, 'terms.html')
+
+def filter(request):
+	colors=request.GET.getlist('color[]')
+	categories=request.GET.getlist('category[]')
+	sizes=request.GET.getlist('size[]')
+	minPrice=request.GET['minPrice']
+	maxPrice=request.GET['maxPrice']
+	allProducts=product.objects.all().order_by('-id').distinct()
+	allProducts=allProducts.filter(productattribute__price__gte=minPrice)
+	allProducts=allProducts.filter(productattribute__price__lte=maxPrice)
+	if len(colors)>0:
+		allProducts=allProducts.filter(productattribute__color__id__in=colors).distinct()
+	if len(categories)>0:
+		allProducts=allProducts.filter(category__id__in=categories).distinct()
+	if len(sizes)>0:
+		allProducts=allProducts.filter(productattribute__size__id__in=sizes).distinct()
+	t=render_to_string('products.html',{'data':allProducts})
+	return render(request, 'filter.html',)
 
 
 

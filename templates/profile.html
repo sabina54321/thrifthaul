@@ -7,13 +7,12 @@
         <div class="card shadow">
           <div
             class="profile-image mt-5 mb-4"
-            style=" background-image: url({{user.profileimage.url}});"
-          ></div>
-          <div class="card-body">
+            style=" background-image: url({{user.profileimage.url}});">
+          </div>    
+           <div class="card-body">
             <button
               class="btn btn-primary item-name mb-2"
-              onclick="location.href = '/editprofile'"
-            >
+              onclick="location.href = '/editprofile'">
               Edit Profile
             </button>
             <hr />
@@ -63,25 +62,24 @@
             <div class="card shadow">
               <div
                 class="card-img-top"
-                style="background-image: url({{product.product_image.url}});"
-              ></div>
+                style="background-image: url({{product.product_image.url}});">
+            </div>
               <div class="card-body">
                 <h5 class="card-title">{{ product.title }}</h5>
                 <p class="card-text">Rs {{ product.item_price }}</p>
                 {% if product.status == True %}
                 <div class="d-flex justify-content-between gap-3">
                   <div class="w-100">
-                    <button
+                    <button 
                       class="btn btn-primary item-name"
-                      onclick="location.href = '/editproduct/{{product.id}}'"
-                    >
+                      onclick="location.href = '/editproduct/{{product.id}}'">
                       Edit
                     </button>
                   </div>
                   <div class="w-100">
                     <form action="/productdelete/{{product.id}}" method="POST">
                       {% csrf_token %}
-                      <button class="btn btn-primary item-name" type="submit">
+                      <button class="btn btn-danger w-100" type="submit" style="height: 45px;">
                         Delete
                       </button>
                     </form>
@@ -89,10 +87,9 @@
                 </div>
                 {% else %}
                 <button
-                class="btn btn-primary item-name"
-              >
+                class="btn btn-primary item-name">
                 Unpublished
-              </button>
+                </button>
                 {% endif %}
               </div>
             </div>

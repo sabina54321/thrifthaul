@@ -65,6 +65,7 @@ class product(models.Model):
     product_image = models.ImageField(upload_to="productimg", null=True, blank=True)
     stock = models.IntegerField(default=0)
     status =  models.BooleanField(default=False)
+    deletestatus = models.BooleanField(default=False)
     def __str__(self):
         return str(self.title) 
 
@@ -83,7 +84,7 @@ class ReviewRating(models.Model):
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.product.title
+        return self.rating       
 
 
 
