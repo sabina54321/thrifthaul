@@ -1,11 +1,9 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<div class="container">
-  <h2>Search Result:</h2>
-  {% if products|length < 1 %}
-  <p>No Product Found</p>
-  {% endif %}
-</div>
 <div class="container" style="margin-top: 150px;">
+  <h2><strong>Search Result:</strong></h2>
+  {% if items|length < 1 %}
+  <p class = "search-result">Looks like there aren't any matches for {{query}}</p>
+  {% endif %}
     <div class="row mt-4">
       {% for product in items %}
       <div class="col-md-4 mb-4">
@@ -24,4 +22,10 @@
       {% endfor %}
     </div>
   </div>
+  <style>
+    .search-result{
+      margin-bottom:75px;
+      font-size: 25px;
+    }
+  </style>
 {% endblock %}

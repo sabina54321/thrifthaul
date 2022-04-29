@@ -55,6 +55,8 @@ def signup(request):
             if user.errors:
                 return render(request, "authentication/register.html", {"errors": user.errors})
     else: 
+        messages.add_message(request, messages.ERROR,
+                                'Wrong Credentials')
         return render(request, 'authentication/register.html')    
         
 
