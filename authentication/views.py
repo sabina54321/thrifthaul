@@ -53,11 +53,10 @@ def signup(request):
             return redirect('login')
         else :
             if user.errors:
+                messages.error(request, 'Wrong information' )
                 return render(request, "authentication/register.html", {"errors": user.errors})
-    else: 
-        messages.add_message(request, messages.ERROR,
-                                'Wrong Credentials')
-        return render(request, 'authentication/register.html')    
+
+    return render(request,"authentication/register.html")   
         
 
 def loginuser(request):

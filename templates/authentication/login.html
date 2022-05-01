@@ -44,9 +44,12 @@
                   <button type="submit" class="btn btn-primary" id="button1">
                     Login
                   </button>
+                  <br><br>
+                  <div id = "information">
                   {% if messages %} {% for result in messages %}
                   <b style="color: #299479">{{result}}</b>
                   {% endfor %} {% endif %}
+                  </div>
                 </div>
                 <br />
                 <div class="card-body">
@@ -62,6 +65,13 @@
     </div>
   </div>
 </body>
+<script>
+	setTimeout(() => {
+		const information = document.getElementById("information");
+	  
+		information.style.display = "none";
+	  }, 4000);
+ </script>
 <style>
   #button1 {
     width: 40%;

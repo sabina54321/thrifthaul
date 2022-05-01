@@ -115,9 +115,9 @@
       <div class="col-md-6">
         <form action="{% url 'submitreview' productDetails.id %}" method="POST">
           {% csrf_token %}
-          <h5><strong>Write Your Review for User</strong></h5>
+          <h5><strong>Write Your Review for the Product</strong></h5>
           <div style="width: 90%;">
-            <label>How do you rate this User?</label><br>
+            <label>How do you rate this Product?</label><br>
             <div class="rate">
               <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10"
                 title="5"></label>

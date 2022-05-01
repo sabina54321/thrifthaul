@@ -1,22 +1,88 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<div class="container" style="margin-top: 150px;">
-    <div class="row mt-4">
-      {% for product in items %}
-      <div class="col-md-4 mb-4">
-        <div class="card shadow">
-          <div class="card-img-top" style="background-image: url({{product.product_image.url}});">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{ product.title }}</h5>
-            <p class="card-text">Rs {{ product.item_price }}</p>
-            <a href="/productdetail/{{product.id}}"><button class="btn btn-primary item-name">
-              View Details
-            </button></a>
+<main class="container my-4">
+	<div class="row">
+		<!-- Filters -->
+		<div class="col-md-3 filter">
+			<h3 class="mb-4 border-bottom pb-1">Filters</h3>
+      		<!-- Categories Filter -->
+			<div class="card mb-4">
+				<h6 class="card-header"><strong>Categories</strong></h6>
+        <form action="/search" method="GET">
+        <select class="Category" name="query">
+          <option name = "query" value="Womens wear">Womens Wear</option>
+          <option name = "query" value="mens wear">Mens Wear</option>
+          <option name = "query" value="kids wear">Kids Wear</option>
+          <option name = "query" value="party bag">Party Bag</option>
+          <option name = "query" value="hand bag">Hand Bag</option>
+          <option name = "query" value="side bag">Side Bag</option>
+      </select>
+      <button type = "submit" class="btn btn-primary mt-3" id="filter-button">Filter</button>
+    </form>
+			</div>
+       <!-- Condition Filter -->
+      <div class="card mb-4">
+				<h6 class="card-header"><strong>Condition</strong></h6>
+        <form action="/search" method="GET">
+        <select class="Condition" name="query">
+          <option name = "query" value="Old">Old</option>
+          <option name = "query" value="Good">Good</option>
+          <option name = "query" value="New">New</option>
+      </select>
+      <button type = "submit" class="btn btn-primary mt-3" id="filter-button">Filter</button>
+    </form>
+			</div>
+      <!-- Size Filter -->
+      <div class="card mb-4">
+				<h6 class="card-header"><strong>Size</strong></h6>
+        <form action="/search" method="GET">
+        <select class="condition" name="query">
+          <option name = "query" value="Small">Small</option>
+          <option name = "query" value="Medium">Medium</option>
+          <option name = "query" value="Large">Large</option>
+          </select>
+          <button type = "submit" class="btn btn-primary mt-3" id="filter-button">Filter</button>
+        </form>
+			</div>
+		</div>
+		<div class="col-md-9 products">
+			<!-- Products -->
+			<h3 class="mb-4 border-bottom pb-1">
+				Products
+			</h3> 
+       <div class="container" style="margin-top: px;">
+          <div class="row mt-4">
+            {% for product in items %}
+            <div class="col-md-4 mb-4">
+              <div class="card shadow">
+                <div class="card-img-top" style="background-image: url({{product.product_image.url}});">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.title }}</h5>
+                  <p class="card-text">Rs {{ product.item_price }}</p>
+                  <a href="/productdetail/{{product.id}}"><button class="btn btn-primary item-name">
+                    View Details
+                  </button></a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
-      </div>
-      {% endfor %}
-     
-    </div>
-  </div>
-{% endblock content %}
+	</div>
+</main>
+  
+  <style>
+    .filter{
+      margin-top: 80px;
+    }
+    #filter-button{
+    width: 30%;
+    padding: 3px;
+    background-color: #299479;
+    border: none;
+    }
+    .products{
+      margin-top:80px;
+    }
+  </style>
+{% endblock content %} 

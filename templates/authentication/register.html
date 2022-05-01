@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block content %}
-<body>
+<body>	
 	<div class = "Register-page-body">
 		<div class = "container">
 	<div class="row register-page-section">
@@ -17,6 +17,13 @@
 			   <div class="register-form-details">
 			   <form action="/register/" method = 'POST' id="contactform" class="contact-form">
 				{% csrf_token%}
+				<div id = "information">
+					{% if messages %}
+					{% for result in messages %}
+					<b style="color: green;">{{result}}</b>
+					{% endfor %}
+					{% endif%}
+				</div>
 				<div class="register">
 					<div class="mb-3">
 						<label for="firstName" class="form-label">First Name</label>
@@ -52,14 +59,6 @@
 								Already have an account?<a href="{% url 'login' %}">Login</a>
 							</p>
 						</div>
-					
-					<div>
-						{% if messages %}
-						{% for result in messages %}
-						<b style="color: green;">{{result}}</b>
-						{% endfor %}
-						{% endif%}
-					</div>
 				 </div>
 				</form>
 			</div>
@@ -68,6 +67,13 @@
 </div>
 </div>
  </body>
+ <script>
+	setTimeout(() => {
+		const information = document.getElementById("information");
+	  
+		information.style.display = "none";
+	  }, 3000);
+ </script>
  <style>
 	#button1 {
 		width: 40%;
@@ -102,7 +108,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		margin-top: 15px
+		margin-top: 25px;
 	  }
  </style>
 {% endblock content %} 

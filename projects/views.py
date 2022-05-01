@@ -105,7 +105,9 @@ def deleteproduct(request,id):
 
 def search(request):  
     query = request.GET["query"]
-    items = product.objects.filter(Q(title__icontains=query)|Q(category__icontains=query))
+    if query == "":
+        return redirect(request.META["HTTP_REFERER"])
+    items = product.objects.filter(Q(title__icontains=query)|Q(category__icontains=query)|Q(size__icontains=query)|Q(condition__icontains=query))
     context = {'items':items, 'query': query} 
     return render(request, 'search.html', context)
 
@@ -142,23 +144,23 @@ def submitreview(request, id):
 def terms(request):
     return render(request, 'terms.html')
 
-def filter(request):
-	colors=request.GET.getlist('color[]')
-	categories=request.GET.getlist('category[]')
-	sizes=request.GET.getlist('size[]')
-	minPrice=request.GET['minPrice']
-	maxPrice=request.GET['maxPrice']
-	allProducts=product.objects.all().order_by('-id').distinct()
-	allProducts=allProducts.filter(productattribute__price__gte=minPrice)
-	allProducts=allProducts.filter(productattribute__price__lte=maxPrice)
-	if len(colors)>0:
-		allProducts=allProducts.filter(productattribute__color__id__in=colors).distinct()
-	if len(categories)>0:
-		allProducts=allProducts.filter(category__id__in=categories).distinct()
-	if len(sizes)>0:
-		allProducts=allProducts.filter(productattribute__size__id__in=sizes).distinct()
-	t=render_to_string('products.html',{'data':allProducts})
-	return render(request, 'filter.html',)
+# def filter(request):
+# 	colors=request.GET.getlist('color[]')
+# 	categories=request.GET.getlist('category[]')
+# 	sizes=request.GET.getlist('size[]')
+# 	minPrice=request.GET['minPrice']
+# 	maxPrice=request.GET['maxPrice']
+# 	allProducts=product.objects.all().order_by('-id').distinct()
+# 	allProducts=allProducts.filter(productattribute__price__gte=minPrice)
+# 	allProducts=allProducts.filter(productattribute__price__lte=maxPrice)
+# 	if len(colors)>0:
+# 		allProducts=allProducts.filter(productattribute__color__id__in=colors).distinct()
+# 	if len(categories)>0:
+# 		allProducts=allProducts.filter(category__id__in=categories).distinct()
+# 	if len(sizes)>0:
+# 		allProducts=allProducts.filter(productattribute__size__id__in=sizes).distinct()
+# 	t=render_to_string('products.html',{'data':allProducts})
+# 	return render(request, 'filter.html',)
 
 
 

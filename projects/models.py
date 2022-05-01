@@ -47,6 +47,14 @@ NEGOTIABLE_CHOICES = (
     ('Y', 'Yes'),
     ('N', 'No'),                                                                                                                
 )
+
+# FILTER_PRICE =(
+#     ('500 To 1000', '500 To 1000'),
+#     ('1000 To 1500', '1000 To 1500'),
+#     ('1500 To 2000', '1500 To 2000'),
+#     ('2000 To 3000', '2000 To 3000'),
+# )
+
 class product(models.Model):
     seller_name = models.CharField(max_length=100, null=True, blank=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -84,7 +92,8 @@ class ReviewRating(models.Model):
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.rating       
+        return self.rating   
+   
 
 
 
